@@ -1,0 +1,51 @@
+---
+title: Easy Bayes with rstanarm and brms
+author:  |
+  <span class="noem">Michael Clark</span> 
+  <a href='https://m-clark.github.io/'>m-clark.github.io</a>
+  <img class='arc' src="img/CSCAR_logos/signature-acronym.png" alt="University of Michigan: CSCAR">
+  <img class='cscar' src="img/ARC_logos/ARC-acronym-signature.png" alt="University of Michigan: Advanced Research Computing"> 
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook
+always_allow_html: yes
+documentclass: book
+# bibliography: refs.bib
+biblio-style: apalike
+nocite: | 
+  @hadley2018
+link-citations: yes
+description: "This is a workshop introducing modeling techniques with the rstanarm and brms packages."  
+cover-image: 'img/nineteeneightyR.png'
+url: 'https\://m-clark.github.io/easy-bayes/'  # evidently the \: is required or you'll get text in the title/toc area
+favicon: 'img/R.ico'
+github-repo:  'm-clark/'
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, message=F, warning=F, error=F, comment=NA, R.options=list(width=220),   # code 
+                      dev.args=list(bg = 'transparent'), dev='svglite',                                 # viz
+                      fig.align='center', out.width='75%', fig.asp=.75,                 
+                      cache.rebuild=F, cache=T)                                                         # cache
+```
+
+
+```{r load_common_packages, echo=FALSE, cache=FALSE, eval=TRUE, cache=FALSE}
+library(tidyverse); library(ggplot2movies); library(tibble); library(tidyext)
+```
+
+# 
+
+<!-- ##### {-} -->
+
+
+
+```{r rimg, fig.align='center',  out.width=200, echo=FALSE, cache=FALSE}
+knitr::include_graphics('img/198R.png', dpi = NA)
+```
+
+```{r ccimg, fig.align='center', out.width=0, fig.show='hide', echo=FALSE}
+knitr::include_graphics('img/mc_logo.png', dpi = NA)
+```

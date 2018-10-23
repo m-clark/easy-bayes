@@ -1,0 +1,5 @@
+# (PART\*) Part I: Getting Started {-}
+
+# Basic Bayesian Analysis
+
+prior  likelihood posterior posterior predictive

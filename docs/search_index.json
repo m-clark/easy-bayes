@@ -1,0 +1,14 @@
+[
+["index.html", "Easy Bayes with rstanarm and brms", " Easy Bayes with rstanarm and brms Michael Clark m-clark.github.io 2018-10-21 "],
+["introduction.html", "Introduction ", " Introduction "],
+["overview.html", "Overview", " Overview Goals Prerequisites Note the following color coding used in this document: emphasis package function object/class link "],
+["basic-bayesian-analysis.html", "Basic Bayesian Analysis", " Basic Bayesian Analysis prior likelihood posterior posterior predictive "],
+["stan-and-the-stan-ecosystem.html", "Stan and the Stan ecosystem ", " Stan and the Stan ecosystem "],
+["rstan.html", "rstan", " rstan "],
+["rstanarm.html", "rstanarm", " rstanarm "],
+["brms.html", "brms", " brms "],
+["more-stan.html", "More Stan", " More Stan shinystan, tidybayes etc. "],
+["basic-glm.html", "Basic GLM", " Basic GLM "],
+["brms-1.html", "brms", " brms "],
+["references.html", "References", " References "]
+]

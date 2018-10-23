@@ -1,0 +1,9 @@
+# Stan and the Stan ecosystem
+
+
+## rstan
+
+## rstanarm
+## brms
+##  More Stan
+shinystan, tidybayes etc.

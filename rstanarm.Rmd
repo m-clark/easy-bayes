@@ -1,0 +1,3 @@
+# (PART\*) Part II: rstanarm {-}
+
+# Basic GLM

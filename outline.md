@@ -1,0 +1,41 @@
+Outline
+
+- Purpose
+- Basic Bayes
+- Stan and Stan ecosystem
+  - rstan
+  - rstanarm
+  - brms
+  - shinystan, tidybayes etc.
+- rstanarm
+  - development
+  - why use
+  - basic approach
+- rstanarm demos
+  - glm
+  - lmer
+  - other
+- brms
+  - development
+  - why use
+  - basic approach
+- brms demos
+  - basic lm with...
+      - bayes_R2
+      - launch_shinystan
+      - marginal_effects and hypothesis
+      - pp_check
+      - model comparison WAIC
+      - pp_average
+      - setting priors
+      - parallelizing
+  - special models
+      - more distributions
+      - lmer with cor res, heterogenous var
+      - lmer with cor re
+      - gam
+      - distributional
+      - truncated
+      - missing
+      - measurement error
+- wrap up
