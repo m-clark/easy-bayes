@@ -2,4 +2,18 @@
 
 # Basic Bayesian Analysis
 
-prior  likelihood posterior posterior predictive
+$$posterior \propto likelihood * prior$$
+
+Standard methods begin and end with likelihood.
+
+$$p(\mathcal{A}|\mathcal{B}) = \frac{p(\mathcal{B}|\mathcal{A})p(\mathcal{A})}{p(\mathcal{B})}$$
+
+$$p(hypothesis|data) \propto p(data|hypothesis)p(hypothesis)$$
+
+$$\text{updated belief} = \text{current evidence} * \text{prior belief or evidence}$$
+
+Distributions and uncertainty over point estimates
+
+http://micl.shinyapps.io/prior2post/
+
+<img src="img/modified_bayes_theorem.png" style="display:block; margin: 0 auto;">
