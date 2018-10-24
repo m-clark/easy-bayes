@@ -3,10 +3,16 @@
 
 ## Overview
 
+This workshop provides an overview of the <span class="pack">rstanarm</span> and <span class="pack">brms</span> packages.  Basic modeling syntax is provided, as well as diagnostic checking, model comparison, and how to get more from the models.
+
 ### Goals
+
+By the end of the workshop, you should be well aware of what <span class="pack">rstanarm</span> and <span class="pack">brms</span> have to offer, and how to use them, as well as what steps you might take to get the most from your models.
 
 
 ### Prerequisites
+
+You should know how to do some standard regression modeling in R.  While prior exposure to Bayesian analysis is in some sense a prerequisite, this can also be seen a stepping stone to Bayesian analysis.  Once you see how easy it is to get more from standard models, and how easy it is to run more complicated models, you'll likely want to use these tools even if you haven't used the Bayesian approach before.
 
 
 Note the following color coding used in this document:

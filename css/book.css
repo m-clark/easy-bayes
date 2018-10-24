@@ -72,6 +72,15 @@
     -moz-text-size-adjust: 100%;
 }
 
+/* changes to font-size for body text */
+.book .book-body .page-wrapper .page-inner section.normal p {
+  font-size: 150%;
+}
+.book .book-body .page-wrapper .page-inner section.normal ul li span, 
+.book .book-body .page-wrapper .page-inner section.normal ul li a {
+  font-size: 150%;
+}
+
 .book .book-body {
     background: #fffff8;
     -webkit-transition: left 250ms ease;
