@@ -16,7 +16,7 @@ Compared to others:
 
 ###
 
-```{stan, eval=F}
+```{stan example_code, eval=FALSE, output.var="ex1"}
 data {                      // Data block
   int<lower=1> N;           // Sample size
   int<lower=1> K;           // Dimension of model matrix
@@ -53,7 +53,12 @@ Model can be a character string or separate file with model expressed in the Sta
 
 rstan runs the model, and provides a lot of other tools to assess.
 
-We will not cover this.
+```{r rstan_example}
+results = stan(model_code = my_model, data = my_data_list)
+```
+
+
+We will not cover this package.
 
 
 ## rstanarm
