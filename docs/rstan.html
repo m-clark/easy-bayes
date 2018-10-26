@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-10-24">
+<meta name="date" content="2018-10-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -114,8 +114,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
 <li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
-<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a><ul>
+<li><a href="stan.html#stan">Stan <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%></a><ul>
 <li><a href="stan.html#section-1"></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
@@ -150,6 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="more-stan.html"><a href="more-stan.html"><i class="fa fa-check"></i>More Stan</a></li>
 </ul></li>
 <li class="part"><span><b>Part II: rstanarm</b></span></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting started</a></li>
 <li class="chapter" data-level="" data-path="basic-glm.html"><a href="basic-glm.html"><i class="fa fa-check"></i>Basic GLM</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i>brms</a></li>
@@ -196,11 +197,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="rstan" class="section level2">
 <h2>rstan</h2>
+<p><img src="img/bayes_doc/r_stan.png" style="display:block; margin: 0 auto;" width=25%></p>
 <p>Allows one to use Stan within R.</p>
-<p>Model can be a character string or separate file with model expressed in the Stan language</p>
+<p>Model can be:</p>
 <ul>
-<li>RStudio support for Stan (e.g. syntax highlighting)</li>
+<li>a character string</li>
+<li>separate file with model expressed in the Stan language</li>
 </ul>
+<p>RStudio support for Stan (e.g. syntax highlighting)</p>
 <p>rstan runs the model, and provides a lot of other tools to assess.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">results =<span class="st"> </span><span class="kw">stan</span>(<span class="dt">model_code =</span> my_model, <span class="dt">data =</span> my_data_list)</a></code></pre></div>
 <p>We will not cover this package.</p>

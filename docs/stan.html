@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-10-24">
+<meta name="date" content="2018-10-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -114,8 +114,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
 <li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
-<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a><ul>
+<li><a href="stan.html#stan">Stan <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%></a><ul>
 <li><a href="stan.html#section-1"></a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
@@ -150,6 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="more-stan.html"><a href="more-stan.html"><i class="fa fa-check"></i>More Stan</a></li>
 </ul></li>
 <li class="part"><span><b>Part II: rstanarm</b></span></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting started</a></li>
 <li class="chapter" data-level="" data-path="basic-glm.html"><a href="basic-glm.html"><i class="fa fa-check"></i>Basic GLM</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i>brms</a></li>
@@ -195,7 +196,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="stan" class="section level2">
-<h2>Stan</h2>
+<h2>Stan <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%></h2>
+<p><img src="img/bayes_doc/stan_logo.png" style="margin: 0 0;" width=25%></p>
+<p><br></p>
 <p>Probabilistic programming language</p>
 <p>HMC/NUTS</p>
 <p>Compared to others:</p>
@@ -208,29 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="section-1" class="section level3">
 <h3></h3>
-<pre class="stan"><code>data {                      // Data block
-  int&lt;lower=1&gt; N;           // Sample size
-  int&lt;lower=1&gt; K;           // Dimension of model matrix
-  matrix[N, K] X;           // Model Matrix
-  vector[N] y;              // Target variable
-}
-
-parameters {                // Parameters block
-  vector[K] beta;           // Coefficient vector
-  real&lt;lower=0&gt; sigma;      // Error scale
-}
-
-model {                     // Model block
-  vector[N] mu;
-  mu = X * beta;            // Creation of linear predictor
-  
-  // priors
-  beta ~ normal(0, 10);
-  sigma ~ cauchy(0, 5);     // With sigma bounded at 0, this is half-cauchy
-  
-  // likelihood
-  y ~ normal(mu, sigma);
-}</code></pre>
+<pre class="stan"><code></code></pre>
 </div>
 </div>
             </section>

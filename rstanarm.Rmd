@@ -1,3 +1,7 @@
 # (PART\*) Part II: rstanarm {-}
 
+# Getting started
+
+
+
 # Basic GLM

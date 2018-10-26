@@ -1,6 +1,10 @@
 # Stan and the Stan ecosystem
 
-## Stan
+## Stan <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%>
+
+<img src="img/bayes_doc/stan_logo.png" style="margin: 0 0;" width=25%>
+
+<br>
 
 Probabilistic programming language
 
@@ -16,7 +20,8 @@ Compared to others:
 
 ###
 
-```{stan example_code, eval=FALSE, output.var="ex1"}
+```{stan example_code, eval=FALSE, output.var="ex1", echo=-1, cache=FALSE}
+# until this is ready just leave as R since it borks after one run and refuses to not eval
 data {                      // Data block
   int<lower=1> N;           // Sample size
   int<lower=1> K;           // Dimension of model matrix
@@ -45,11 +50,16 @@ model {                     // Model block
 
 ## rstan
 
+<img src="img/bayes_doc/r_stan.png" style="display:block; margin: 0 auto;" width=25%>
+
 Allows one to use Stan within R.
 
-Model can be a character string or separate file with model expressed in the Stan language 
+Model can be: 
 
-- RStudio support for Stan (e.g. syntax highlighting)
+- a character string
+- separate file with model expressed in the Stan language 
+
+RStudio support for Stan (e.g. syntax highlighting)
 
 rstan runs the model, and provides a lot of other tools to assess.
 
@@ -65,14 +75,17 @@ We will not cover this package.
 
 Developed by Stan team.
 
-Good for basic to intermediate and even somewhat complex models.
+Good for basic to intermediate, and even somewhat complex models.
 
 Precompiled stan code. 
 
 - Standard models run very quickly
+- Without compilation will always be faster than brms
 
 
 ## brms
+
+<img src="img/brms.png" style="display:block; margin: 0 auto;">
 
 Developed along with Stan team (though by one person)
 

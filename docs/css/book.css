@@ -74,9 +74,16 @@
 
 /* changes to font-size for body text */
 .book .book-body .page-wrapper .page-inner section.normal p,
+.book .book-body .page-wrapper .page-inner section.normal ul li, 
 .book .book-body .page-wrapper .page-inner section.normal ul li span, 
 .book .book-body .page-wrapper .page-inner section.normal ul li a {
   font-size: 150%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal ol, 
+.book .book-body .page-wrapper .page-inner section.normal ul {
+    padding: 0 0 0 2em;
+    margin: 0 0 .85em;
 }
 
 .book .book-body {
