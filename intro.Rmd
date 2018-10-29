@@ -7,7 +7,7 @@ This workshop provides an overview of the <span class="pack">rstanarm</span> and
 
 ### Goals
 
-By the end of the workshop, you should be well aware of what <span class="pack">rstanarm</span> and <span class="pack">brms</span> have to offer, and how to use them, as well as what steps you might take to get the most from your models.
+Note that it is not a goal of this workshop to teach Bayesian data analysis.  However, by the end of the workshop, you should be well aware of what <span class="pack">rstanarm</span> and <span class="pack">brms</span> have to offer, and how to use them, as well as what steps you might take to get the most from your models.  
 
 
 ### Prerequisites

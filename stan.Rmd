@@ -1,10 +1,6 @@
-# Stan and the Stan ecosystem
+# Stan and the Stan ecosystem <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%>
 
-## Stan <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%>
-
-<img src="img/bayes_doc/stan_logo.png" style="margin: 0 0;" width=25%>
-
-<br>
+## Stan 
 
 Probabilistic programming language
 
@@ -18,9 +14,15 @@ Compared to others:
 - less autocorrelation
 - faster for more complex models
 
-###
+Why use?
 
-```{stan example_code, eval=FALSE, output.var="ex1", echo=-1, cache=FALSE}
+- Fit very complex models
+- Better approaches for model diagnostics
+- Natural interval estimates for any statistic that comes out of a model
+
+####
+
+```{r example_code, eval=FALSE, output.var="ex1", echo=-1, cache=FALSE}
 # until this is ready just leave as R since it borks after one run and refuses to not eval
 data {                      // Data block
   int<lower=1> N;           // Sample size
@@ -80,7 +82,7 @@ Good for basic to intermediate, and even somewhat complex models.
 Precompiled stan code. 
 
 - Standard models run very quickly
-- Without compilation will always be faster than brms
+- Without compilation will always be faster than brms for identical models
 
 
 ## brms
@@ -93,7 +95,7 @@ Good for basic to complex models.
 
 Not pre-compiled
 
-- Some simpler models with less data would take longer for compilation than to run.
+- Some simpler models with less data would take longer for compilation than to actually run.
 
 Extremely rapid feature integration.
 
@@ -103,3 +105,45 @@ Many package to explore the results of a Stan model from any of these packages.
 
 - shinystan
 - tidybayes etc.
+
+
+```{r stan_getgraph, eval=F, echo=FALSE, cache=TRUE}
+# rdocumentation appears to be nearly abandoned at this point 2018-10-28.  Months long bugs of not displaying basic info on landing page, reverse dependencies have disappeared, and other fundamental problems not being fixed.
+get_depgraph = function(pack) {
+  require(httr)
+  url = paste0('http://rdocumentation.org/api/packages/', pack, '/reversedependencies')
+  out = GET(url) %>% 
+    content()
+  node_df = data.table::rbindlist(out$nodes, fill = T)
+  edge_df = data.table::rbindlist(out$links, fill = T)
+  list(node_df=node_df, edge_df=edge_df)
+}
+stan_depgraph = get_depgraph('rstan')
+```
+
+```{r stan_graph, echo=F, eval=F, cache=FALSE}
+nodes = stan_depgraph$node_df %>% 
+  rename(label=name) %>% 
+  rownames_to_column(var='id') %>% 
+  mutate(id=as.integer(id)-1)
+edges = stan_depgraph$edge_df %>% 
+  rename(from=source,
+         to=target)
+
+listed_packs = c('brms', 'bayesplot', 'rstanarm', 'shinystan', 'loo', 'tidybayes', 'rethinking')
+edges_trim = edges %>% 
+  filter(to == 0) %>% 
+  mutate(value = if_else(from %in% nodes$id[nodes$label %in% listed_packs], 30L, value),
+         length = if_else(from %in% nodes$id[nodes$label %in% listed_packs], 0, 250))
+
+nodes_trim = nodes %>% 
+  filter(id %in% c(0, edges_trim$from)) %>% 
+  mutate(value=c(100, rep(0, nrow(.)-1)),
+         value = if_else(label %in% listed_packs, 30, value))
+  
+visNetwork(nodes = nodes_trim, 
+             edges=edges_trim) %>% 
+  visEdges(color=list(opacity=.10),
+           # length = c(200,10),
+           physics = T)
+```
