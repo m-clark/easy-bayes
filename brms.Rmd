@@ -1,3 +1,19 @@
 # (PART\*) Part III: brms {-}
 
-# brms
+# Installation
+
+- <span class="pack">rstan</span> installation required.
+- Installed as any other R package
+
+
+# Models
+
+## brms: Mixed Model
+
+## brms: Mixed Model Extensions
+
+- Correlated residuals, heterogeneous var, heterogeneous var comp
+- GAM
+- ZIP
+- Multivariate
+- Missing data

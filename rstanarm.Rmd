@@ -1,7 +1,110 @@
 # (PART\*) Part II: rstanarm {-}
 
+
+
 # Getting started
 
+- <span class="pack">rstan</span> installation required.
+- Installed as any other R package
 
 
 # Basic GLM
+
+Whether a survey respondent agrees or disagrees with a conservative statement about the role of women in society
+
+- 1974/1975 Survey
+- Women should take care of running their homes and leave running the country up to men
+- Modeled as a function of the gender and education of the respondents
+
+## Traditional GLM
+
+```{r basic_logistic_data_prep, echo=FALSE, eval=FALSE}
+data("womensrole", package = "HSAUR3")
+womensrole = womensrole %>% 
+  mutate(total = agree + disagree,
+         agree50 = agree/total >= .5)
+readr::write_csv(womensrole, 'data/womensrole.csv')
+```
+
+```{r basic_logistic, echo=-2, eval=-c(2,4)}
+data("womensrole", package = "HSAUR3")
+womensrole = readr::read_csv('data/womensrole.csv')
+womensrole_glm <- glm(cbind(agree, disagree) ~ education + gender,
+                        data = womensrole, 
+                        family = binomial)
+summary(womensrole_glm)
+```
+
+```{r basic_logistic_result, echo=FALSE, eval=TRUE}
+tidy(womensrole_glm) %>% 
+  kable_df()
+```
+
+
+## rstanarm: GLM
+
+
+```{r bayesian_logistic0, echo=FALSE}
+womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
+                              data = womensrole,
+                              family = binomial)
+save(womensrole, womensrole_bglm, file = 'data/womensrole_bayes.RData')
+```
+
+```{r bayesian_logistic}
+library(rstanarm)
+womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
+                              data = womensrole,
+                              family = binomial)
+summary(womensrole_bglm, digits = 3)
+```
+
+```{r bayesian_logistic_pretty, eval=TRUE, echo=FALSE}
+load('data/womensrole_bayes.RData')
+print(womensrole_bglm, digits = 3)
+```
+
+
+```{r echo=FALSE}
+print(womensrole_bglm, digits = 3)
+
+# save for later
+womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
+                              data = womensrole,
+                              family = binomial(link = "logit"), 
+                              prior = student_t(df = 7), 
+                              prior_intercept = student_t(df = 7),
+                              iter = 5000,
+                              warmup = 2000,
+                              thin = 10,
+                              cores = 4, 
+                              seed = 1234)
+
+prior_summary(womensrole_bglm)
+```
+
+
+
+## rstanarm: Mixed Model
+
+```{r mixed}
+library(lme4)
+sleepstudy_lmer <- lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
+summary(sleepstudy_lmer)
+```
+
+```{r bayesian_mixed, echo=-3}
+sleepstudy_blmer <- stan_lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
+summary(sleepstudy_blmer)
+save(sleepstudy_lmer, sleepstudy_blmer, file = 'data/sleepstudy_bayes.RData')
+```
+
+```{r}
+load('data/sleepstudy_bayes.RData')
+```
+
+
+## rstanarm: Other Models
+
+
+# Priors
