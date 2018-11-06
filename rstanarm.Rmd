@@ -96,10 +96,10 @@ summary(sleepstudy_lmer)
 ```{r bayesian_mixed, echo=-3}
 sleepstudy_blmer <- stan_lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
 summary(sleepstudy_blmer)
-save(sleepstudy_lmer, sleepstudy_blmer, file = 'data/sleepstudy_bayes.RData')
+save(sleepstudy_lmer, sleepstudy_blmer, sleepstudy_brms, file = 'data/sleepstudy_bayes.RData')
 ```
 
-```{r}
+```{r load_mixed_models, echo=FALSE, eval=TRUE}
 load('data/sleepstudy_bayes.RData')
 ```
 
@@ -108,3 +108,5 @@ load('data/sleepstudy_bayes.RData')
 
 
 # Priors
+
+tidy methods

@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="img/R.ico" type="image/x-icon">
-<link rel="prev" href="stan-and-the-stan-ecosystem.html">
-<link rel="next" href="rstan.html">
+<link rel="prev" href="rstanarm-other-models.html">
+<link rel="next" href="installation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -204,58 +204,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stan" class="section level2">
-<h2>Stan</h2>
-<p>Probabilistic programming language</p>
-<p>HMC/NUTS</p>
-<p>Compared to others:</p>
-<ul>
-<li>Fast convergence</li>
-<li>No conjugacy required</li>
-<li>warmup vs. burnin</li>
-<li>less autocorrelation</li>
-<li>faster for more complex models</li>
-</ul>
-<p>Why use?</p>
-<ul>
-<li>Fit very complex models</li>
-<li>Better approaches for model diagnostics</li>
-<li>Natural interval estimates for any statistic that comes out of a model</li>
-</ul>
-<div id="section-1" class="section level4">
-<h4></h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">data {                      <span class="op">/</span><span class="er">/</span><span class="st"> </span>Data block</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  int<span class="op">&lt;</span>lower=<span class="dv">1</span><span class="op">&gt;</span><span class="st"> </span>N;           <span class="op">/</span><span class="er">/</span><span class="st"> </span>Sample size</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  int<span class="op">&lt;</span>lower=<span class="dv">1</span><span class="op">&gt;</span><span class="st"> </span>K;           <span class="op">/</span><span class="er">/</span><span class="st"> </span>Dimension of model matrix</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  matrix[N, K] X;           <span class="op">/</span><span class="er">/</span><span class="st"> </span>Model Matrix</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  vector[N] y;              <span class="op">/</span><span class="er">/</span><span class="st"> </span>Target variable</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">parameters {                <span class="op">/</span><span class="er">/</span><span class="st"> </span>Parameters block</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  vector[K] beta;           <span class="op">/</span><span class="er">/</span><span class="st"> </span>Coefficient vector</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  real<span class="op">&lt;</span>lower=<span class="dv">0</span><span class="op">&gt;</span><span class="st"> </span>sigma;      <span class="op">/</span><span class="er">/</span><span class="st"> </span>Error scale</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">model {                     <span class="op">/</span><span class="er">/</span><span class="st"> </span>Model block</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">  vector[N] mu;</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">  mu =<span class="st"> </span>X <span class="op">*</span><span class="st"> </span>beta;            <span class="op">/</span><span class="er">/</span><span class="st"> </span>Creation of linear predictor</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">  </a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="op">/</span><span class="er">/</span><span class="st"> </span>priors</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  beta <span class="op">~</span><span class="st"> </span><span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>);</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">  sigma <span class="op">~</span><span class="st"> </span><span class="kw">cauchy</span>(<span class="dv">0</span>, <span class="dv">5</span>);     <span class="op">/</span><span class="er">/</span><span class="st"> </span>With sigma bounded at <span class="dv">0</span>, this is half<span class="op">-</span>cauchy</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">  </a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="op">/</span><span class="er">/</span><span class="st"> </span>likelihood</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">  y <span class="op">~</span><span class="st"> </span><span class="kw">normal</span>(mu, sigma);</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">}</a></code></pre></div>
+<div id="priors" class="section level1">
+<h1>Priors</h1>
+<p>tidy methods</p>
+
 </div>
-</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="stan-and-the-stan-ecosystem.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rstan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rstanarm-other-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="installation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
