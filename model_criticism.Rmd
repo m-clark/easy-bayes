@@ -1,0 +1,22 @@
+# (PART\*) Part IV: Model Criticism {-}
+
+# Model Criticism in rstanarm and brms
+
+- Much of the core functionality is the same across both packages
+    - Functions that exist in both are identical
+- We will focus on brms
+
+# Model Exploration
+## marginal effects
+## hypothesis tests
+
+# Model Diagnostics
+## launch_shinystan
+## pp check
+## loo plot
+
+
+# Model Performance
+## model comparison
+## model average
+## prediction

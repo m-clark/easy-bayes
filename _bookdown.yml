@@ -22,6 +22,10 @@ rmd_files: [
   'brms.Rmd',
   #'blah.Rmd',
 
+  # Part IV
+  'model_criticism.Rmd',
+  #'blah.Rmd',
+
   # Other
   #'summary.Rmd',
   'references.Rmd'

@@ -64,14 +64,12 @@ load('data/womensrole_bayes.RData')
 print(womensrole_bglm, digits = 3)
 ```
 
+### Adding more options
 
-```{r echo=FALSE}
-print(womensrole_bglm, digits = 3)
-
-# save for later
+```{r echo=T}
 womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
                               data = womensrole,
-                              family = binomial(link = "logit"), 
+                              family = binomial, 
                               prior = student_t(df = 7), 
                               prior_intercept = student_t(df = 7),
                               iter = 5000,
@@ -79,8 +77,6 @@ womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
                               thin = 10,
                               cores = 4, 
                               seed = 1234)
-
-prior_summary(womensrole_bglm)
 ```
 
 
@@ -109,4 +105,19 @@ load('data/sleepstudy_bayes.RData')
 
 # Priors
 
-tidy methods
+## Getting priors
+
+```{r getting_priors}
+prior_summary(womensrole_bglm)
+```
+
+## Setting priors
+
+```{r setting_priors}
+womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
+                              data = womensrole,
+                              family = binomial, 
+                              prior = student_t(df = 7))
+```
+
+
