@@ -3,16 +3,65 @@
 # Model Criticism in rstanarm and brms
 
 - Much of the core functionality is the same across both packages
-    - Functions that exist in both are identical
-- We will focus on brms
+- Functions that exist in both are identical
+- We will focus on brms, which has some extras
 
 # Model Exploration
-## marginal effects
-## hypothesis tests
+## Marginal effects
+
+
+<span class="pack">brms</span> allows one to to plot marginal effects
+
+For standard linear models this is useful for group comparisons and interactions
+
+For nonlinear models (glm and beyond) useful for any effect
+
+```{r brms_marginal, eval=TRUE}
+marginal_effects(attendance_brms)
+```
+
+
+## Hypothesis tests
+
+```{r brms_hype, eval=TRUE}
+hypothesis(attendance_brms, 'genderMale < -.2')
+
+hypothesis(attendance_brms, 'progGeneral/progAcademic > 1')
+```
+
+
+## Extracting results
 
 # Model Diagnostics
-## launch_shinystan
+
+Numerous model diagnostics are available to the Bayesian analyst
+
+The Stan ecosystem makes exploring these not only easy, but fun!
+
+## Shiny stan
+
+<span class="pack">shinystan</span> allows for interactive exploration of model diagnostics
+
+Just use <span class="func">launch_shinystan</span> on any model object from <span class="pack">rstan</span>, <span class="pack">rstanarm</span>, or <span class="pack">brms</span>
+
+```{r shinystan}
+launch_shinystan(attendance_brms)
+```
+
 ## pp check
+
+```{r pp_check}
+pp_check(attendance_brms)
+```
+
+The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, we can have a random effect per observation for Poisson models (even in the non-Bayesian context).  In this case, our pp_check suggests a much better result.
+
+```{r fix}
+test = update(attendance_brms, . ~ . + (1|id), newdata=attendance)
+pp_check(test)
+```
+
+
 ## loo plot
 
 

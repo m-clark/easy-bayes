@@ -10,13 +10,208 @@
 
 # Basic GLM
 
+School administrators study the attendance behavior of high school juniors at two schools  
+
+Target:
+
+- Number of days of absence
+
+Predictors:
+
+- Type of program in which the student is enrolled: 
+  General, Vocational, Academic
+- standardized test in math
+- Gender
+
+## Traditional GLM
+
+```{r basic_poisson_data_prep, eval=FALSE, echo=-10}
+library(tidyverse)
+attendance = haven::read_dta("https://stats.idre.ucla.edu/stat/stata/dae/nb_data.dta")
+attendance <- attendance %>% 
+  mutate(
+    prog = factor(prog, levels = 1:3, labels = c("General", "Academic", "Vocational")),
+    prog = fct_relevel(prog, c('Vocational', 'General', 'Academic')),
+    gender = factor(gender, labels = c('Female', 'Male')),
+    id = factor(id)
+  )
+saveRDS(attendance, 'data/attendance.Rds')
+```
+
+
+
+
+```{r basic_poisson, echo=-1, eval=-3}
+attendance = readRDS('data/attendance.Rds')
+attendance_glm <- glm(daysabs ~ math + gender + prog,
+                      data = attendance, 
+                      family = poisson)
+summary(attendance_glm)
+```
+
+```{r basic_poisson_result, echo=FALSE, eval=TRUE}
+tidy(attendance_glm) %>% 
+  kable_df()
+```
+
+
+## rstanarm: GLM
+
+
+```{r bayesian_poisson0, echo=FALSE}
+attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
+                            data = attendance, 
+                            family = poisson)
+attendance_brms <- brm(daysabs ~ math + gender + prog,
+                       data = attendance, 
+                       family = poisson, cores=4, thin=10)
+save(attendance, attendance_bglm, attendance_brms, file = 'data/attendance_bayes.RData')
+```
+
+```{r bayesian_poisson}
+library(rstanarm)
+attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
+                            data = attendance, 
+                            family = poisson)
+summary(attendance_bglm, digits = 3)
+```
+
+```{r bayesian_poisson_pretty, eval=TRUE, echo=FALSE}
+load('data/attendance_bayes.RData')
+print(attendance_bglm, digits = 3)
+```
+
+### Adding more options
+
+Typical configuration would involve setting priors, as well as MCMC options such as iterations, warmup, etc.
+
+```{r bayesian_poisson_options, echo=T}
+attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
+                            data = attendance, 
+                            family = poisson, 
+                            prior = student_t(df = 7), 
+                            prior_intercept = student_t(df = 7),
+                            iter = 5000,
+                            warmup = 2000,
+                            thin = 10,
+                            cores = 4, 
+                            seed = 1234)
+```
+
+
+
+## rstanarm: Mixed Model
+
+```{r mixed, eval=TRUE}
+library(lme4)
+sleepstudy_lmer <- lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
+summary(sleepstudy_lmer)
+```
+
+```{r bayesian_mixed, echo=-3}
+sleepstudy_blmer <- stan_lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
+summary(sleepstudy_blmer)
+save(sleepstudy_lmer, sleepstudy_blmer, sleepstudy_brms, file = 'data/sleepstudy_bayes.RData')
+```
+
+```{r load_mixed_models, echo=FALSE, eval=TRUE}
+load('data/sleepstudy_bayes.RData')
+print(sleepstudy_blmer, digits = 3)
+```
+
+
+## rstanarm: Other Models
+
+- ANOVA
+- Beta regression
+- Conditional logistic
+- GLM including negative binomial models
+- Generalized additive models
+- Nonlinear and Generalized mixed models
+- 'Joint' models for longitudinal and time-to-event (e.g. survival)
+- Multivariate
+- Ordinal models
+
+
+
+
+# Priors
+
+## Default priors
+
+Depends on the model
+
+For most models: 
+
+- intercepts are treated differently
+- regression coefficients have mean zero with some specific variance
+- scale parameters (e.g. residual variance) will have appropriate priors
+
+Basically, <span class="pack">rstanarm</span> is going to be okay for you to use defaults 
+
+Resources about priors:
+
+`?prior_summary`
+`?priors`
+http://mc-stan.org/rstanarm/articles/priors.html
+https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations
+
+<br>
+
+
+
+## Getting priors
+
+```{r getting_priors, eval=TRUE}
+prior_summary(attendance_bglm)
+```
+
+## Setting priors
+
+One can set priors with the appropriate arguments to the model function
+
+
+| Argument       | Used in  | Applies to |
+| ------------- | ------------- | ------------- |
+| `prior_intercept` | All modeling functions except `stan_polr` and `stan_nlmer`| Model intercept, after centering predictors.|
+| `prior` |  All modeling functions| Regression coefficients. Does _not_ include coefficients that vary by group in a multilevel model (see `prior_covariance`).|
+| `prior_aux` | `stan_glm`\*, `stan_glmer`\*, `stan_gamm4`, `stan_nlmer`| Auxiliary parameter, e.g. error SD (interpretation depends on the GLM).|
+| `prior_covariance` | `stan_glmer`\*, `stan_gamm4`, `stan_nlmer`| Covariance matrices in multilevel models with varying slopes and intercepts. See the [`stan_glmer` vignette](http://mc-stan.org/rstanarm/articles/glmer.html) for details on this prior.|
+
+
+<br> 
+
+The `stan_polr`, `stan_betareg`, and `stan_gamm4` functions also provide
+additional arguments specific only to those models:
+
+| Argument       | Used only in  | Applies to |
+| ------------- | ------------- | ------------- |
+| `prior_smooth` | `stan_gamm4` | Prior for hyperparameters in GAMs (lower values yield less flexible smooth functions). |
+| `prior_counts` | `stan_polr` | Prior counts of an _ordinal_ outcome (when predictors at sample means). |
+| `prior_z`  |  `stan_betareg`| Coefficients in the model for `phi`.|
+| `prior_intercept_z` | `stan_betareg`| Intercept in the model for `phi`. |
+| `prior_phi` | `stan_betareg`| `phi`, if not modeled as function of predictors. |
+
+
+### Example
+
+```{r setting_priors}
+attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
+                            data = attendance, 
+                            family = poisson, 
+                            prior = student_t(df = 7))
+```
+
+
+# Exercise
+
 Whether a survey respondent agrees or disagrees with a conservative statement about the role of women in society
 
 - 1974/1975 Survey
 - Women should take care of running their homes and leave running the country up to men
 - Modeled as a function of the gender and education of the respondents
 
-## Traditional GLM
+
 
 ```{r basic_logistic_data_prep, echo=FALSE, eval=FALSE}
 data("womensrole", package = "HSAUR3")
@@ -35,89 +230,7 @@ womensrole_glm <- glm(cbind(agree, disagree) ~ education + gender,
 summary(womensrole_glm)
 ```
 
-```{r basic_logistic_result, echo=FALSE, eval=TRUE}
+```{r basic_logistic_result, echo=FALSE, eval=FALSE}
 tidy(womensrole_glm) %>% 
   kable_df()
 ```
-
-
-## rstanarm: GLM
-
-
-```{r bayesian_logistic0, echo=FALSE}
-womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
-                              data = womensrole,
-                              family = binomial)
-save(womensrole, womensrole_bglm, file = 'data/womensrole_bayes.RData')
-```
-
-```{r bayesian_logistic}
-library(rstanarm)
-womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
-                              data = womensrole,
-                              family = binomial)
-summary(womensrole_bglm, digits = 3)
-```
-
-```{r bayesian_logistic_pretty, eval=TRUE, echo=FALSE}
-load('data/womensrole_bayes.RData')
-print(womensrole_bglm, digits = 3)
-```
-
-### Adding more options
-
-```{r echo=T}
-womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
-                              data = womensrole,
-                              family = binomial, 
-                              prior = student_t(df = 7), 
-                              prior_intercept = student_t(df = 7),
-                              iter = 5000,
-                              warmup = 2000,
-                              thin = 10,
-                              cores = 4, 
-                              seed = 1234)
-```
-
-
-
-## rstanarm: Mixed Model
-
-```{r mixed}
-library(lme4)
-sleepstudy_lmer <- lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
-summary(sleepstudy_lmer)
-```
-
-```{r bayesian_mixed, echo=-3}
-sleepstudy_blmer <- stan_lmer(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy)
-summary(sleepstudy_blmer)
-save(sleepstudy_lmer, sleepstudy_blmer, sleepstudy_brms, file = 'data/sleepstudy_bayes.RData')
-```
-
-```{r load_mixed_models, echo=FALSE, eval=TRUE}
-load('data/sleepstudy_bayes.RData')
-```
-
-
-## rstanarm: Other Models
-
-
-# Priors
-
-## Getting priors
-
-```{r getting_priors}
-prior_summary(womensrole_bglm)
-```
-
-## Setting priors
-
-```{r setting_priors}
-womensrole_bglm <- stan_glm(cbind(agree, disagree) ~ education + gender,
-                              data = womensrole,
-                              family = binomial, 
-                              prior = student_t(df = 7))
-```
-
-

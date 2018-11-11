@@ -183,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="launch-shinystan.html"><a href="launch-shinystan.html"><i class="fa fa-check"></i>launch_shinystan</a></li>
+<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
 <li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
@@ -233,8 +233,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="launch_shinystan" class="section level2">
-<h2>launch_shinystan</h2>
+<div id="shiny-stan" class="section level2">
+<h2>Shiny stan</h2>
+<p><span class="pack">shinystan</span> allows for interactive exploration of model diagnostics</p>
+<p>Just use <span class="func">launch_shinystan</span> on any model object from <span class="pack">rstan</span>, <span class="pack">rstanarm</span>, or <span class="pack">brms</span></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">launch_shinystan</span>(attendance_brms)</a></code></pre></div>
 </div>
             </section>
 

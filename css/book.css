@@ -16,6 +16,7 @@
   font-variant:  small-caps;
   font-weight: 200;
   font-family: 'Roboto Condensed', 'Fira Sans', Roboto, 'Open Sans', sans;
+  text-align: left;
 }
 
 .book .book-body .page-wrapper .page-inner section.normal .author a {
@@ -26,6 +27,7 @@
   /*font-variant:  small-caps;  so that can displayed as input*/
   font-weight: 200;
   font-family: 'Roboto Condensed', 'Fira Sans', Roboto, 'Open Sans', sans;
+  text-align: left;
 }
 
 
@@ -43,6 +45,7 @@
   font-style: normal;
   font-size:  100%;
   font-family: 'Open Sans', sans;
+  text-align: left;
 }
 
 /* main */
@@ -75,7 +78,7 @@
 /* changes to font-size for body text */
 .book .book-body .page-wrapper .page-inner section.normal p,
 .book .book-body .page-wrapper .page-inner section.normal ul li, 
-.book .book-body .page-wrapper .page-inner section.normal ul li span, 
+/*.book .book-body .page-wrapper .page-inner section.normal ul li span, */
 .book .book-body .page-wrapper .page-inner section.normal ul li a {
   font-size: 150%;
 }
@@ -247,6 +250,25 @@ i {
     direction: ltr;
     border: none;
     color: inherit;
+    font-size: 125%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal td code,
+.book .book-body .page-wrapper .page-inner section.normal td pre {
+    font-family: 'Roboto Mono', Monaco, Consolas, "Liberation Mono", Menlo, 'Courier New', monospace;
+    direction: ltr;
+    border: none;
+    color: inherit;
+    font-size: 100%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal p code,
+.book .book-body .page-wrapper .page-inner section.normal p pre {
+    font-family: 'Roboto Mono', Monaco, Consolas, "Liberation Mono", Menlo, 'Courier New', monospace;
+    direction: ltr;
+    border: none;
+    color: inherit;
+    font-size: 100%;
 }
 
 .book .book-body .page-wrapper .page-inner section.normal .note {
@@ -267,6 +289,10 @@ i {
 h1, h2, h3, h4, h5 {
   color:#990024;
   font-family: 'Roboto Condensed';
+}
+
+h1 {
+  text-align: center;
 }
 
 /* notes */
@@ -351,7 +377,7 @@ img {
 
 .cscar {
   display: block;
-  width:21%;
+  width: 21%;
   padding:5px 0;
   margin: 0 0 10px 0;
 }

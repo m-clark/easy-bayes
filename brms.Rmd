@@ -8,6 +8,7 @@
 
 # Comparison to rstanarm
 
+In general, <span class="pack">brms</span> offers more modeling capabilities, flexibility with priors, and more.
 
 <img src="img/brms_vs_rstanarm.png" style="display:block; margin: 0 auto;" width=75%>
 
@@ -43,24 +44,34 @@ summary(sleepstudy_brms)
 - additional distributions: ordinal, zero-inflated, beta and many more
 - Correlated residuals, Additive mixed models, non-linear with known form, heterogenous variance components, correlated random effects across multivariate outcomes, and more
 
-```{r}
+```{r examples}
 # auto regressive residual structure
-model <- brm(Reaction ~ Days + (1 + Days|Subject), data = sleepstudy, correlation = cor_ar(~Days))
+model <- brm(Reaction ~ Days + (1 + Days|Subject), 
+             data = sleepstudy, 
+             correlation = cor_ar(~Days))
 
-# smooth term for Days
-model <- brm(Reaction ~ s(Days) + (1 + Days|Subject), data = sleepstudy)
+# multi-membership models
+model <- brm(DV ~ x + (1|mm(group_1, group_2)), 
+             data = sleepstudy, 
+             correlation = cor_ar(~Days))
 
-# multivarate outcome q is an arbitrarily named identifier connecting random effects.
+# smooth terms
+model <- brm(Reaction ~ s(Days) + (1 + Days|Subject), 
+             data = sleepstudy)
+
+# use gaussian process instead
+model <- brm(Reaction ~ gp(Days) + (1 + Days|Subject), 
+             data = sleepstudy)
+
+
+
+# multivarate outcome; q is an arbitrarily named identifier connecting random
+# effects.
 f1 = bf(DV_1 ~ x + 1|q|group)
 f2 = bf(DV_2 ~ x + 1|q|group)
 f = f1 + f2
 
 model <- brm(f, data = mydata)
-
-
-# non-linear model with known form
-nlform <- bf(cum ~ ult * (1 - exp(-(dev / theta)^omega)),
-             ult ~ 1 + (1 | AY), omega ~ 1, theta ~ 1, nl = TRUE)
 
 ```
 
@@ -75,3 +86,21 @@ nlform <- bf(cum ~ ult * (1 - exp(-(dev / theta)^omega)),
 - Multivariate
 - Missing data
 - Measurement error
+
+
+```{r mo_models}
+
+
+
+
+# non-linear model with known form
+nlform <- bf(cum ~ ult * (1 - exp(-(dev / theta)^omega)),
+             ult ~ 1 + (1 | AY), omega ~ 1, theta ~ 1, nl = TRUE)
+
+# missing values
+bform <- bf(bmi | mi() ~ age * mi(chl)) +
+  bf(chl | mi() ~ age) + set_rescor(FALSE)
+fit <- brm(bform, data = nhanes)
+
+```
+

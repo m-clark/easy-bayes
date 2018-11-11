@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-06">
+<meta name="date" content="2018-11-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
-<li><a href="stan-and-the-stan-ecosystem.html#stan-and-the-stan-ecosystem">Stan and the Stan ecosystem <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%></a><ul>
+<li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
 <li class="chapter" data-level="" data-path="rstanarm.html"><a href="rstanarm.html"><i class="fa fa-check"></i>rstanarm</a></li>
@@ -159,9 +159,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="rstanarm-other-models.html"><a href="rstanarm-other-models.html"><i class="fa fa-check"></i>rstanarm: Other Models</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i>Priors</a><ul>
+<li class="chapter" data-level="" data-path="default-priors.html"><a href="default-priors.html"><i class="fa fa-check"></i>Default priors</a></li>
 <li class="chapter" data-level="" data-path="getting-priors.html"><a href="getting-priors.html"><i class="fa fa-check"></i>Getting priors</a></li>
-<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a></li>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a><ul>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html#example"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
@@ -174,11 +178,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
 <li class="chapter" data-level="" data-path="model-exploration.html"><a href="model-exploration.html"><i class="fa fa-check"></i>Model Exploration</a><ul>
-<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>marginal effects</a></li>
-<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="launch-shinystan.html"><a href="launch-shinystan.html"><i class="fa fa-check"></i>launch_shinystan</a></li>
+<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
 <li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
@@ -230,11 +235,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="rstanarm-mixed-model" class="section level2">
 <h2>rstanarm: Mixed Model</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">sleepstudy_lmer &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">summary</span>(sleepstudy_lmer)</a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">sleepstudy_blmer &lt;-<span class="st"> </span><span class="kw">stan_lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">summary</span>(sleepstudy_blmer)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">sleepstudy_lmer &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">summary</span>(sleepstudy_lmer)</a></code></pre></div>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: Reaction ~ Days + (1 + Days | Subject)
+   Data: sleepstudy
+
+REML criterion at convergence: 1743.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9536 -0.4634  0.0231  0.4634  5.1793 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr
+ Subject  (Intercept) 612.09   24.740       
+          Days         35.07    5.922   0.07
+ Residual             654.94   25.592       
+Number of obs: 180, groups:  Subject, 18
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  251.405      6.825  36.838
+Days          10.467      1.546   6.771
+
+Correlation of Fixed Effects:
+     (Intr)
+Days -0.138</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">sleepstudy_blmer &lt;-<span class="st"> </span><span class="kw">stan_lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), <span class="dt">data =</span> sleepstudy)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">summary</span>(sleepstudy_blmer)</a></code></pre></div>
+<pre><code>stan_lmer
+ family:       gaussian [identity]
+ formula:      Reaction ~ Days + (1 + Days | Subject)
+ observations: 180
+------
+            Median  MAD_SD 
+(Intercept) 251.616   6.503
+Days         10.451   1.629
+sigma        25.853   1.541
+
+Error terms:
+ Groups   Name        Std.Dev. Corr
+ Subject  (Intercept) 24.258       
+          Days         6.901   0.08
+ Residual             25.959       
+Num. levels: Subject 18 
+
+Sample avg. posterior predictive distribution of y:
+         Median  MAD_SD 
+mean_PPD 298.572   2.716
+
+------
+For info on the priors used see help(&#39;prior_summary.stanreg&#39;).</code></pre>
 </div>
             </section>
 

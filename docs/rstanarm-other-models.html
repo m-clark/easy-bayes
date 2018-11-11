@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-06">
+<meta name="date" content="2018-11-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
-<li><a href="stan-and-the-stan-ecosystem.html#stan-and-the-stan-ecosystem">Stan and the Stan ecosystem <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%></a><ul>
+<li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
 <li class="chapter" data-level="" data-path="rstanarm.html"><a href="rstanarm.html"><i class="fa fa-check"></i>rstanarm</a></li>
@@ -159,9 +159,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="rstanarm-other-models.html"><a href="rstanarm-other-models.html"><i class="fa fa-check"></i>rstanarm: Other Models</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i>Priors</a><ul>
+<li class="chapter" data-level="" data-path="default-priors.html"><a href="default-priors.html"><i class="fa fa-check"></i>Default priors</a></li>
 <li class="chapter" data-level="" data-path="getting-priors.html"><a href="getting-priors.html"><i class="fa fa-check"></i>Getting priors</a></li>
-<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a></li>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a><ul>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html#example"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
@@ -174,11 +178,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
 <li class="chapter" data-level="" data-path="model-exploration.html"><a href="model-exploration.html"><i class="fa fa-check"></i>Model Exploration</a><ul>
-<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>marginal effects</a></li>
-<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="launch-shinystan.html"><a href="launch-shinystan.html"><i class="fa fa-check"></i>launch_shinystan</a></li>
+<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
 <li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
@@ -230,6 +235,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="rstanarm-other-models" class="section level2">
 <h2>rstanarm: Other Models</h2>
+<ul>
+<li>ANOVA</li>
+<li>Beta regression</li>
+<li>Conditional logistic</li>
+<li>GLM including negative binomial models</li>
+<li>Generalized additive models</li>
+<li>Nonlinear and Generalized mixed models</li>
+<li>‘Joint’ models for longitudinal and time-to-event (e.g. survival)</li>
+<li>Multivariate</li>
+<li>Ordinal models</li>
+</ul>
 </div>
 <!-- </div> -->
             </section>

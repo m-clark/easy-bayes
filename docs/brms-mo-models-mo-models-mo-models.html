@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-06">
+<meta name="date" content="2018-11-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
-<li><a href="stan-and-the-stan-ecosystem.html#stan-and-the-stan-ecosystem">Stan and the Stan ecosystem <img src="img/bayes_doc/stan_logo.png" style="vertical-align:middle; display:inline;" width=5%></a><ul>
+<li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
 <li class="chapter" data-level="" data-path="rstanarm.html"><a href="rstanarm.html"><i class="fa fa-check"></i>rstanarm</a></li>
@@ -159,9 +159,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="rstanarm-other-models.html"><a href="rstanarm-other-models.html"><i class="fa fa-check"></i>rstanarm: Other Models</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i>Priors</a><ul>
+<li class="chapter" data-level="" data-path="default-priors.html"><a href="default-priors.html"><i class="fa fa-check"></i>Default priors</a></li>
 <li class="chapter" data-level="" data-path="getting-priors.html"><a href="getting-priors.html"><i class="fa fa-check"></i>Getting priors</a></li>
-<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a></li>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a><ul>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html#example"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
@@ -174,11 +178,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
 <li class="chapter" data-level="" data-path="model-exploration.html"><a href="model-exploration.html"><i class="fa fa-check"></i>Model Exploration</a><ul>
-<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>marginal effects</a></li>
-<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="launch-shinystan.html"><a href="launch-shinystan.html"><i class="fa fa-check"></i>launch_shinystan</a></li>
+<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
 <li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
@@ -239,6 +244,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Missing data</li>
 <li>Measurement error</li>
 </ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># non-linear model with known form</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">nlform &lt;-<span class="st"> </span><span class="kw">bf</span>(cum <span class="op">~</span><span class="st"> </span>ult <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(dev <span class="op">/</span><span class="st"> </span>theta)<span class="op">^</span>omega)),</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">             ult <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>AY), omega <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, theta <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">nl =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co"># missing values</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">bform &lt;-<span class="st"> </span><span class="kw">bf</span>(bmi <span class="op">|</span><span class="st"> </span><span class="kw">mi</span>() <span class="op">~</span><span class="st"> </span>age <span class="op">*</span><span class="st"> </span><span class="kw">mi</span>(chl)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="st">  </span><span class="kw">bf</span>(chl <span class="op">|</span><span class="st"> </span><span class="kw">mi</span>() <span class="op">~</span><span class="st"> </span>age) <span class="op">+</span><span class="st"> </span><span class="kw">set_rescor</span>(<span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">fit &lt;-<span class="st"> </span><span class="kw">brm</span>(bform, <span class="dt">data =</span> nhanes)</a></code></pre></div>
 
 </div>
 <!-- </div> -->

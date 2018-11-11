@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="img/R.ico" type="image/x-icon">
-<link rel="prev" href="model-diagnostics.html">
-<link rel="next" href="pp-check.html">
+<link rel="prev" href="priors.html">
+<link rel="next" href="getting-priors.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -183,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="launch-shinystan.html"><a href="launch-shinystan.html"><i class="fa fa-check"></i>launch_shinystan</a></li>
+<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
 <li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
@@ -233,16 +233,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="launch_shinystan" class="section level2">
-<h2>launch_shinystan</h2>
+<div id="default-priors" class="section level2">
+<h2>Default priors</h2>
+<p>Depends on the model</p>
+<p>For most models:</p>
+<ul>
+<li>intercepts are treated differently</li>
+<li>regression coefficients have mean zero with some specific variance</li>
+<li>scale parameters (e.g. residual variance) will have appropriate priors</li>
+</ul>
+<p>Basically, <span class="pack">rstanarm</span> is going to be okay for you to use defaults</p>
+<p>Resources about priors:</p>
+<p><code>?prior_summary</code>
+<code>?priors</code>
+<a href="http://mc-stan.org/rstanarm/articles/priors.html" class="uri">http://mc-stan.org/rstanarm/articles/priors.html</a>
+<a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations" class="uri">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a></p>
+<p><br></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="model-diagnostics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pp-check.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="priors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="getting-priors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
