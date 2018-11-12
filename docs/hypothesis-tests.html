@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-10">
+<meta name="date" content="2018-11-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -170,6 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
 <li class="chapter" data-level="" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i>Models</a><ul>
+<li class="chapter" data-level="" data-path="methods-for-brmsfit-objects.html"><a href="methods-for-brmsfit-objects.html"><i class="fa fa-check"></i>Methods for brmsfit objects</a></li>
 <li class="chapter" data-level="" data-path="models-in-brms.html"><a href="models-in-brms.html"><i class="fa fa-check"></i>Models in brms</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model.html"><a href="brms-mixed-model.html"><i class="fa fa-check"></i>brms: Mixed Model</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model-extensions.html"><a href="brms-mixed-model-extensions.html"><i class="fa fa-check"></i>brms: Mixed Model Extensions</a></li>
@@ -178,6 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
 <li class="chapter" data-level="" data-path="model-exploration.html"><a href="model-exploration.html"><i class="fa fa-check"></i>Model Exploration</a><ul>
+<li class="chapter" data-level="" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i>Linear models</a></li>
 <li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
 <li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
@@ -235,14 +237,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="hypothesis-tests" class="section level2">
 <h2>Hypothesis tests</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;genderMale &lt; -.2&#39;</span>)</a></code></pre></div>
+<p>Null hypothesis testing doesn’t apply to the Bayesian context</p>
+<p>However, we can still ask questions about the probability of certain outcomes</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">attendance_brms</a></code></pre></div>
+<pre><code> Family: poisson 
+  Links: mu = log 
+Formula: daysabs ~ math + gender + prog 
+   Data: attendance (Number of observations: 314) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 10;
+         total post-warmup samples = 400
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept        1.49      0.08     1.32     1.63        376 1.00
+math            -0.01      0.00    -0.01    -0.01        401 1.00
+genderMale      -0.25      0.04    -0.34    -0.16        421 0.99
+progGeneral      1.27      0.08     1.11     1.43        391 1.00
+progAcademic     0.85      0.07     0.70     0.99        404 1.00
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;genderMale &lt; -.2&#39;</span>)</a></code></pre></div>
 <pre><code>Hypothesis Tests for class b:
               Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
 1 (genderMale)-(-.2) &lt; 0    -0.05      0.04     -Inf     0.03        5.9      0.86     
 ---
 &#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;progGeneral/progAcademic &gt; 1&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;progGeneral/progAcademic &gt; 1&#39;</span>)</a></code></pre></div>
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
 1 (progGeneral/prog... &gt; 0     0.51      0.09     0.37      Inf        Inf         1    *

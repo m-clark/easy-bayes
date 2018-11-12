@@ -7,6 +7,30 @@
 - We will focus on brms, which has some extras
 
 # Model Exploration
+
+## Linear models
+
+For linear models, one might be interested in some notion of $R^2$
+
+Automatically get an interval estimate as well
+
+```{r brms_R2, eval=TRUE}
+fit <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
+bayes_R2(fit, digits=2)
+```
+
+Mixed models can include random effects or not
+
+```{r brms_R2_mixed, eval=TRUE}
+bayes_R2(sleepstudy_brms, re_formula = NA, digits=2)
+```
+
+```{r brms_R2_mixed_with_re, eval=TRUE}
+bayes_R2(sleepstudy_brms)
+```
+
+
+
 ## Marginal effects
 
 
@@ -23,7 +47,13 @@ marginal_effects(attendance_brms)
 
 ## Hypothesis tests
 
+Null hypothesis testing doesn't apply to the Bayesian context
+
+However, we can still ask questions about the probability of certain outcomes
+
 ```{r brms_hype, eval=TRUE}
+attendance_brms
+
 hypothesis(attendance_brms, 'genderMale < -.2')
 
 hypothesis(attendance_brms, 'progGeneral/progAcademic > 1')
@@ -31,6 +61,15 @@ hypothesis(attendance_brms, 'progGeneral/progAcademic > 1')
 
 
 ## Extracting results
+
+If there is something specific you need to do with the results, it is easy to get access to the output
+
+```{r brms_extract}
+posterior_samples(attendance_brms, pars = 'math') %>% 
+  qplot(data=., x = b_math, geom = 'density')
+```
+
+
 
 # Model Diagnostics
 
@@ -50,20 +89,28 @@ launch_shinystan(attendance_brms)
 
 ## pp check
 
-```{r pp_check}
+Posterior predictive checks can let us inspect what the model suggests for our target variable vs. what actually is the case
+
+```{r pp_check, eval=TRUE}
 pp_check(attendance_brms)
 ```
 
-The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, we can have a random effect per observation for Poisson models (even in the non-Bayesian context).  In this case, our pp_check suggests a much better result.
+The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation for Poisson models (even in the non-Bayesian context).  In this case, our pp_check suggests a much better result.
 
-```{r fix}
-test = update(attendance_brms, . ~ . + (1|id), newdata=attendance)
-pp_check(test)
+```{r pp_check2, eval=TRUE}
+attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), newdata=attendance, refresh=0)
+pp_check(attendance_brms_add_re)
 ```
 
+```{r}
+pp_average(attendance_brms, attendance_brms_add_re)
+```
 
 ## loo plot
 
+```{r}
+methods(class = 'brmsfit')
+```
 
 # Model Performance
 ## model comparison

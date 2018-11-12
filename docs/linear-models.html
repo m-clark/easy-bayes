@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="img/R.ico" type="image/x-icon">
-<link rel="prev" href="rstan.html">
-<link rel="next" href="brms.html">
+<link rel="prev" href="model-exploration.html">
+<link rel="next" href="marginal-effects.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -235,23 +235,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rstanarm" class="section level2">
-<h2>rstanarm</h2>
-<p>Developed by Stan team</p>
-<p>Good for basic to intermediate, and even somewhat complex models</p>
-<p>Precompiled stan code</p>
-<ul>
-<li>Standard models run very quickly</li>
-<li>Without compilation will always be faster than brms for identical models</li>
-</ul>
+<div id="linear-models" class="section level2">
+<h2>Linear models</h2>
+<p>For linear models, one might be interested in some notion of <span class="math inline">\(R^2\)</span></p>
+<p>Automatically get an interval estimate as well</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw">brm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars, <span class="dt">refresh =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">bayes_R2</span>(fit, <span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
+<pre><code>    Estimate  Est.Error      Q2.5     Q97.5
+R2 0.8178259 0.03046187 0.7357123 0.8527994</code></pre>
+<p>Mixed models can include random effects or not</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">bayes_R2</span>(sleepstudy_brms, <span class="dt">re_formula =</span> <span class="ot">NA</span>, <span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
+<pre><code>    Estimate  Est.Error      Q2.5     Q97.5
+R2 0.2815599 0.06296109 0.1561139 0.4018669</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">bayes_R2</span>(sleepstudy_brms)</a></code></pre></div>
+<pre><code>    Estimate  Est.Error      Q2.5     Q97.5
+R2 0.7908612 0.01784671 0.7497048 0.8206132</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="rstan.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="brms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-exploration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="marginal-effects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -8,7 +8,7 @@
 
 # Comparison to rstanarm
 
-In general, <span class="pack">brms</span> offers more modeling capabilities, flexibility with priors, and more.
+<span class="pack">brms</span> offers more modeling capabilities, flexibility with priors, and more
 
 <img src="img/brms_vs_rstanarm.png" style="display:block; margin: 0 auto;" width=75%>
 
@@ -16,15 +16,23 @@ In general, <span class="pack">brms</span> offers more modeling capabilities, fl
 
 <img src="img/brms_model_fitting.png" style="display:block; margin: 0 auto;" width=50%>
 
+## Methods for brmsfit objects
+
+This is all the fun stuff to play with after running a model
+
+```{r brm_methods, eval=TRUE}
+methods(class = 'brmsfit')
+```
+
 
 ## Models in brms
 
 The modeling syntax with brms mimics base R and some of the more popular packages:
 
-- base R
-- lme4
-- mgcv
-- survival
+- <span class="pack">base R</span>
+- <span class="pack">lme4</span>
+- <span class="pack">mgcv</span>
+- <span class="pack">survival</span>
 
 ## brms: Mixed Model
 
@@ -63,8 +71,6 @@ model <- brm(Reaction ~ s(Days) + (1 + Days|Subject),
 model <- brm(Reaction ~ gp(Days) + (1 + Days|Subject), 
              data = sleepstudy)
 
-
-
 # multivarate outcome; q is an arbitrarily named identifier connecting random
 # effects.
 f1 = bf(DV_1 ~ x + 1|q|group)
@@ -84,23 +90,45 @@ model <- brm(f, data = mydata)
 - Gaussian Processes
 - ZIP
 - Multivariate
-- Missing data
+- Missing data imputation from a Bayesian approach
 - Measurement error
 
 
 ```{r mo_models}
+# additional distributions
+model = brm(y ~ x + z, family = skew_normal,
+                                student,
+                                shifted_lognormal,
+                                weibull,
+                                frechet,
+                                gen_extreme_value,
+                                exgaussian,
+                                wiener,
+                                Beta,
+                                von_mises,
+                                asym_laplace,
+                                hurdle_poisson,_negbinomial,_gamma,_lognormal,
+                                zero_inflated_poisson,_negbinomial,_beta,_binomial; zero_one_inflated_beta,
+                                categorical,
+                                ordinal: cumulative, sratio, cratio, acat)
 
-
-
-
-# non-linear model with known form
-nlform <- bf(cum ~ ult * (1 - exp(-(dev / theta)^omega)),
-             ult ~ 1 + (1 | AY), omega ~ 1, theta ~ 1, nl = TRUE)
+# model the variance as well as the mean
+fit1 <- brm(bf(y ~ x + z, sigma ~ x), 
+            data = dat1, 
+            family = gaussian)
 
 # missing values
 bform <- bf(bmi | mi() ~ age * mi(chl)) +
   bf(chl | mi() ~ age) + set_rescor(FALSE)
 fit <- brm(bform, data = nhanes)
 
+# non-linear model with known form
+nlform <- bf(cum ~ ult * (1 - exp(-(dev / theta)^omega)),
+             ult ~ 1 + (1 | AY), omega ~ 1, theta ~ 1, nl = TRUE)
+
+# measurement error
+fit1 <- brm(y ~ me(x1, sdx) + me(x2, sdx), 
+            data = dat, 
+            save_mevars = TRUE)
 ```
 
