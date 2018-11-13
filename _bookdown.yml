@@ -16,17 +16,17 @@ rmd_files: [
 
   # Part II
   'rstanarm.Rmd',
-  #'blah.Rmd',
+  
 
   # Part III
   'brms.Rmd',
-  #'blah.Rmd',
+  
 
   # Part IV
   'model_criticism.Rmd',
-  #'blah.Rmd',
+  
 
   # Other
-  #'summary.Rmd',
+  'conclusion.Rmd',
   'references.Rmd'
 ]

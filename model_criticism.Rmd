@@ -22,7 +22,7 @@ bayes_R2(fit, digits=2)
 Mixed models can include random effects or not
 
 ```{r brms_R2_mixed, eval=TRUE}
-bayes_R2(sleepstudy_brms, re_formula = NA, digits=2)
+bayes_R2(sleepstudy_brms, re_formula = NA)
 ```
 
 ```{r brms_R2_mixed_with_re, eval=TRUE}
@@ -65,6 +65,8 @@ hypothesis(attendance_brms, 'progGeneral/progAcademic > 1')
 If there is something specific you need to do with the results, it is easy to get access to the output
 
 ```{r brms_extract}
+posterior_samples(attendance_brms, pars = 'math') %>% head()
+
 posterior_samples(attendance_brms, pars = 'math') %>% 
   qplot(data=., x = b_math, geom = 'density')
 ```
@@ -74,6 +76,7 @@ posterior_samples(attendance_brms, pars = 'math') %>%
 # Model Diagnostics
 
 Numerous model diagnostics are available to the Bayesian analyst
+
 
 The Stan ecosystem makes exploring these not only easy, but fun!
 
@@ -87,6 +90,7 @@ Just use <span class="func">launch_shinystan</span> on any model object from <sp
 launch_shinystan(attendance_brms)
 ```
 
+
 ## pp check
 
 Posterior predictive checks can let us inspect what the model suggests for our target variable vs. what actually is the case
@@ -95,24 +99,58 @@ Posterior predictive checks can let us inspect what the model suggests for our t
 pp_check(attendance_brms)
 ```
 
-The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation for Poisson models (even in the non-Bayesian context).  In this case, our pp_check suggests a much better result.
+The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation (even in the non-Bayesian context)[^pln].  In this case, our pp_check suggests a much better result.
 
-```{r pp_check2, eval=TRUE}
-attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), newdata=attendance, refresh=0)
+```{r pp_check2_init}
+attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), 
+                                newdata = attendance)
 pp_check(attendance_brms_add_re)
 ```
+
+```{r pp_check2, echo=FALSE, eval=TRUE}
+attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), newdata = attendance, refresh=0)
+pp_check(attendance_brms_add_re)
+```
+
+For more on this see [Ben Bolker's demonstration with lme4](https://glmm.wdfiles.com/local--files/examples/overdispersion.pdf).
+
+
+
+
+
+## loo plot
+
+We can get into observation level diagnostics as well
+
+While the process is very technical, we can use the simple visualization to note 'outliers'
+
+Look for values above .7 (though this default can be changed)
+
+```{r loo_plot, eval=TRUE}
+plot(loo(attendance_brms))
+title('')
+```
+
+# Model Performance
+## Model Comparison
+
+```{r WAIC}
+WAIC(attendance_brms, attendance_brms_add_re)
+```
+
+## model average
 
 ```{r}
 pp_average(attendance_brms, attendance_brms_add_re)
 ```
 
-## loo plot
 
-```{r}
-methods(class = 'brmsfit')
-```
-
-# Model Performance
-## model comparison
-## model average
 ## prediction
+
+
+
+
+[^pln]: This essentially changes the model to incorporate a Poisson log-normal distribution.  As @montesinos-lopez_bayesian_2017 describe:
+> The Poisson component of the Poisson-lognormal distribution accommodates integer inputs (or outputs) to describe the actual number of counts observed within a single unit or sample, while the lognormal component of the distribution describes the overdispersion in the Poisson rate parameter...
+
+<!-- https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5427491/ -->

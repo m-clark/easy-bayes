@@ -11,7 +11,7 @@ output:
   bookdown::gitbook
 always_allow_html: yes
 documentclass: book
-# bibliography: refs.bib
+bibliography: BayesBasics.bib
 biblio-style: apalike
 nocite: | 
   @hadley2018
