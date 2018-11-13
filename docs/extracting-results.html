@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-11">
+<meta name="date" content="2018-11-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -190,10 +190,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-performance.html"><a href="model-performance.html"><i class="fa fa-check"></i>Model Performance</a><ul>
-<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>model comparison</a></li>
+<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>Model Comparison</a></li>
 <li class="chapter" data-level="" data-path="model-average.html"><a href="model-average.html"><i class="fa fa-check"></i>model average</a></li>
 <li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>prediction</a></li>
 </ul></li>
+<li class="part"><span><b>Part V: Conclusion</b></span></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class='after'">
@@ -238,8 +240,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="extracting-results" class="section level2">
 <h2>Extracting results</h2>
 <p>If there is something specific you need to do with the results, it is easy to get access to the output</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">  </span><span class="kw">qplot</span>(<span class="dt">data=</span>., <span class="dt">x =</span> b_math, <span class="dt">geom =</span> <span class="st">&#39;density&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">qplot</span>(<span class="dt">data=</span>., <span class="dt">x =</span> b_math, <span class="dt">geom =</span> <span class="st">&#39;density&#39;</span>)</a></code></pre></div>
 </div>
 <!-- </div> -->
             </section>

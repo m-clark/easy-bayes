@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-11">
+<meta name="date" content="2018-11-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -190,10 +190,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-performance.html"><a href="model-performance.html"><i class="fa fa-check"></i>Model Performance</a><ul>
-<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>model comparison</a></li>
+<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>Model Comparison</a></li>
 <li class="chapter" data-level="" data-path="model-average.html"><a href="model-average.html"><i class="fa fa-check"></i>model average</a></li>
 <li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>prediction</a></li>
 </ul></li>
+<li class="part"><span><b>Part V: Conclusion</b></span></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class='after'">
@@ -240,11 +242,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Posterior predictive checks can let us inspect what the model suggests for our target variable vs. what actually is the case</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/pp_check-1.svg" width="768" style="display: block; margin: auto;" /></p>
-<p>The Poisson’s underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches. Interestingly, for Poisson models we can have a random effect per observation for Poisson models (even in the non-Bayesian context). In this case, our pp_check suggests a much better result.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">attendance_brms_add_re =<span class="st"> </span><span class="kw">update</span>(attendance_brms, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id), <span class="dt">newdata=</span>attendance, <span class="dt">refresh=</span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="kw">pp_check</span>(attendance_brms_add_re)</a></code></pre></div>
+<p>The Poisson’s underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches. Interestingly, for Poisson models we can have a random effect per observation (even in the non-Bayesian context)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. In this case, our pp_check suggests a much better result.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">attendance_brms_add_re =<span class="st"> </span><span class="kw">update</span>(attendance_brms, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id), </a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">                                <span class="dt">newdata =</span> attendance)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">pp_check</span>(attendance_brms_add_re)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/pp_check2-1.svg" width="768" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">pp_average</span>(attendance_brms, attendance_brms_add_re)</a></code></pre></div>
+<p>For more on this see <a href="https://glmm.wdfiles.com/local--files/examples/overdispersion.pdf">Ben Bolker’s demonstration with lme4</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>This essentially changes the model to incorporate a Poisson log-normal distribution. As <span class="citation">Montesinos-López et al. (<a href="#ref-montesinos-lopez_bayesian_2017">2017</a>)</span> describe:
+&gt; The Poisson component of the Poisson-lognormal distribution accommodates integer inputs (or outputs) to describe the actual number of counts observed within a single unit or sample, while the lognormal component of the distribution describes the overdispersion in the Poisson rate parameter…<a href="pp-check.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 

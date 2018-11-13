@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-11">
+<meta name="date" content="2018-11-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -190,10 +190,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-performance.html"><a href="model-performance.html"><i class="fa fa-check"></i>Model Performance</a><ul>
-<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>model comparison</a></li>
+<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>Model Comparison</a></li>
 <li class="chapter" data-level="" data-path="model-average.html"><a href="model-average.html"><i class="fa fa-check"></i>model average</a></li>
 <li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>prediction</a></li>
 </ul></li>
+<li class="part"><span><b>Part V: Conclusion</b></span></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class='after'">
@@ -237,7 +239,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="loo-plot" class="section level2">
 <h2>loo plot</h2>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">methods</span>(<span class="dt">class =</span> <span class="st">&#39;brmsfit&#39;</span>)</a></code></pre></div>
+<p>We can get into observation level diagnostics as well</p>
+<p>While the process is very technical, we can use the simple visualization to note ‘outliers’</p>
+<p>Look for values above .7 (though this default can be changed)</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">loo</span>(attendance_brms))</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">title</span>(<span class="st">&#39;&#39;</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/loo_plot-1.svg" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <!-- </div> -->
             </section>
