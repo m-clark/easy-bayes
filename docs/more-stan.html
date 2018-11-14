@@ -32,7 +32,7 @@
   
   <link rel="shortcut icon" href="img/R.ico" type="image/x-icon">
 <link rel="prev" href="brms.html">
-<link rel="next" href="getting-started.html">
+<link rel="next" href="getting-started-with-rstanarm.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,13 +69,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -119,8 +117,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -145,6 +143,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
+<li class="chapter" data-level="" data-path="advantages.html"><a href="advantages.html"><i class="fa fa-check"></i>Advantages</a></li>
 <li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
@@ -153,7 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="more-stan.html"><a href="more-stan.html"><i class="fa fa-check"></i>More Stan</a></li>
 </ul></li>
 <li class="part"><span><b>Part II: rstanarm</b></span></li>
-<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting started</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-rstanarm.html"><a href="getting-started-with-rstanarm.html"><i class="fa fa-check"></i>Getting Started with rstanarm</a></li>
 <li class="chapter" data-level="" data-path="basic-glm.html"><a href="basic-glm.html"><i class="fa fa-check"></i>Basic GLM</a><ul>
 <li class="chapter" data-level="" data-path="traditional-glm.html"><a href="traditional-glm.html"><i class="fa fa-check"></i>Traditional GLM</a></li>
 <li class="chapter" data-level="" data-path="rstanarm-glm.html"><a href="rstanarm-glm.html"><i class="fa fa-check"></i>rstanarm: GLM</a><ul>
@@ -170,7 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
-<li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
+<li class="chapter" data-level="" data-path="installing-brms.html"><a href="installing-brms.html"><i class="fa fa-check"></i>Installing brms</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
 <li class="chapter" data-level="" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i>Models</a><ul>
 <li class="chapter" data-level="" data-path="methods-for-brmsfit-objects.html"><a href="methods-for-brmsfit-objects.html"><i class="fa fa-check"></i>Methods for brmsfit objects</a></li>
@@ -246,14 +245,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="more-stan" class="section level2">
 <h2>More Stan</h2>
-<p>Many packages to explore the results of a Stan model from any of these packages.</p>
+<p>Many packages to explore the results of a Stan model</p>
 <ul>
 <li>shinystan</li>
 <li>tidybayes</li>
 <li>various model-specific packages etc.</li>
 </ul>
-<div id="htmlwidget-cb3a57b49ed32e8b8797" style="width:768px;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cb3a57b49ed32e8b8797">{"x":{"nodes":{"id":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"label":["rstan","broom","brms","prophet","lsmeans","bayesplot","rstanarm","sjstats","nimble","shinystan","rstantools","bridgesampling","loo","eggCounts","tidybayes","ggmcmc","dfpk","hBayesDM","bmlm","beanz","finalfit","MCMCvis","DeLorean","ctsem","CopulaDTA","breathteststan","dgo","RBesT","survHE","BANOVA","JMbayes","idem","trialr","raw","edstan","walker","projpred","bayesImageS","blavaan","ggfan","conStruct","clinDR","varian","treatSens","gastempt","broom.mixed","evidence","MADPop","DrBats","bayesLopod","idealstan","dfped","glmmfields","BMSC","tmbstan","pollimetry","adnuts","MIXFIM","themetagenomics","HCT","GPRMortality","MetaStan","nauf","mlmm","rethinking"],"group":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"value":[100,0,30,0,0,30,30,0,0,30,0,0,30,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,30]},"edges":{"from":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"to":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"value":[10,30,10,10,30,30,10,10,30,10,10,30,10,30,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,30],"length":[250,0,250,250,0,0,250,250,0,250,250,0,250,0,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,0]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"physics":true,"color":{"opacity":0.1}}},"groups":["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64"],"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e276ded287dd18603d70" style="width:600px;height:1200px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e276ded287dd18603d70">{"x":{"nodes":{"id":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"label":["rstan","broom","brms","prophet","lsmeans","bayesplot","rstanarm","sjstats","nimble","shinystan","rstantools","bridgesampling","loo","eggCounts","tidybayes","ggmcmc","bmlm","dfpk","hBayesDM","beanz","finalfit","MCMCvis","DeLorean","ctsem","breathteststan","CopulaDTA","dgo","RBesT","survHE","BANOVA","JMbayes","trialr","raw","idem","conStruct","clinDR","edstan","walker","projpred","bayesImageS","blavaan","ggfan","gastempt","broom.mixed","varian","treatSens","evidence","MADPop","bayesLopod","DrBats","tmbstan","idealstan","dfped","glmmfields","BMSC","pollimetry","adnuts","MIXFIM","MetaStan","themetagenomics","HCT","GPRMortality","rethinking","nauf","mlmm"],"group":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"value":[100,0,30,0,0,30,30,0,0,30,0,0,30,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0]},"edges":{"from":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"to":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"value":[10,30,10,10,30,30,10,10,30,10,10,30,10,30,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,30,10,10],"length":[250,0,250,250,0,0,250,250,0,250,250,0,250,0,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,0,250,250]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"physics":true,"color":{"opacity":0.1}}},"groups":["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64"],"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)"},"evals":[],"jsHooks":[]}</script>
 
 </div>
 <!-- </div> -->
@@ -266,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="brms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="getting-started.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="getting-started-with-rstanarm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -13,14 +13,14 @@ always_allow_html: yes
 documentclass: book
 bibliography: BayesBasics.bib
 biblio-style: apalike
-nocite: | 
-  @hadley2018
 link-citations: yes
 description: "This is a workshop introducing modeling techniques with the rstanarm and brms packages."  
 cover-image: 'img/nineteeneightyR.png'
 url: 'https\://m-clark.github.io/easy-bayes/'  # evidently the \: is required or you'll get text in the title/toc area
 favicon: 'img/R.ico'
 github-repo:  'm-clark/'
+nocite: | 
+  @mcelreath2016, @kruschke2014doing
 ---
 
 ```{r chunk_setup, include=FALSE, eval=TRUE}

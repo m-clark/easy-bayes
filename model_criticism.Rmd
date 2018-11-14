@@ -10,6 +10,13 @@
 
 ## Linear models
 
+Get a simple coefficient plot[^visibly]
+
+```{r stanplot_coef, eval=TRUE}
+stanplot(attendance_brms)
+```
+
+
 For linear models, one might be interested in some notion of $R^2$
 
 Automatically get an interval estimate as well
@@ -29,6 +36,8 @@ bayes_R2(sleepstudy_brms, re_formula = NA)
 bayes_R2(sleepstudy_brms)
 ```
 
+
+[^visibly]: I prefer my own package [visibly](https://m-clark.github.io/visibly/reference/plot_coefficients.html) for this.  There are a couple other plotting functions for some of the common <span class="pack">brms</span> models (e.g. glm, mixed)
 
 
 ## Marginal effects
@@ -169,13 +178,13 @@ launch_shinystan(attendance_brms)
 
 ## Posterior Predictive Checks
 
-Posterior predictive checks can let us inspect what the model suggests for our target variable vs. what actually is the case
+<span class="emph">Posterior predictive checks</span> can let us inspect what the model suggests for our target variable vs. what actually is the case
 
 ```{r pp_check, eval=TRUE}
 pp_check(attendance_brms)
 ```
 
-The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation (even in the non-Bayesian context)[^pln].  In this case, our pp_check suggests a much better result.
+The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation (even in the non-Bayesian context)[^pln] to model additional variance.  In this case, our pp_check suggests a much better result.
 
 ```{r pp_check2_init}
 attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), 
@@ -184,7 +193,7 @@ pp_check(attendance_brms_add_re)
 ```
 
 ```{r pp_check2, echo=FALSE, eval=TRUE}
-attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), newdata = attendance, refresh=0)
+attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), cores=4, newdata = attendance, refresh=0)
 pp_check(attendance_brms_add_re)
 ```
 

@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,13 +69,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -119,8 +117,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -145,6 +143,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Part I: Getting Started</b></span></li>
 <li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
+<li class="chapter" data-level="" data-path="advantages.html"><a href="advantages.html"><i class="fa fa-check"></i>Advantages</a></li>
 <li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
 <li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a></li>
 <li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
@@ -153,7 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="more-stan.html"><a href="more-stan.html"><i class="fa fa-check"></i>More Stan</a></li>
 </ul></li>
 <li class="part"><span><b>Part II: rstanarm</b></span></li>
-<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting started</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-rstanarm.html"><a href="getting-started-with-rstanarm.html"><i class="fa fa-check"></i>Getting Started with rstanarm</a></li>
 <li class="chapter" data-level="" data-path="basic-glm.html"><a href="basic-glm.html"><i class="fa fa-check"></i>Basic GLM</a><ul>
 <li class="chapter" data-level="" data-path="traditional-glm.html"><a href="traditional-glm.html"><i class="fa fa-check"></i>Traditional GLM</a></li>
 <li class="chapter" data-level="" data-path="rstanarm-glm.html"><a href="rstanarm-glm.html"><i class="fa fa-check"></i>rstanarm: GLM</a><ul>
@@ -170,7 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
-<li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
+<li class="chapter" data-level="" data-path="installing-brms.html"><a href="installing-brms.html"><i class="fa fa-check"></i>Installing brms</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
 <li class="chapter" data-level="" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i>Models</a><ul>
 <li class="chapter" data-level="" data-path="methods-for-brmsfit-objects.html"><a href="methods-for-brmsfit-objects.html"><i class="fa fa-check"></i>Methods for brmsfit objects</a></li>
@@ -246,19 +245,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="linear-models" class="section level2">
 <h2>Linear models</h2>
+<p>Get a simple coefficient plot<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">stanplot</span>(attendance_brms)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/stanplot_coef-1.svg" width="768" style="display: block; margin: auto;" /></p>
 <p>For linear models, one might be interested in some notion of <span class="math inline">\(R^2\)</span></p>
 <p>Automatically get an interval estimate as well</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw">brm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars, <span class="dt">refresh =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">bayes_R2</span>(fit, <span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw">brm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars, <span class="dt">refresh =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">bayes_R2</span>(fit, <span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
 <pre><code>    Estimate  Est.Error      Q2.5     Q97.5
-R2 0.8178259 0.03046187 0.7357123 0.8527994</code></pre>
+R2 0.8180078 0.03055521 0.7410065 0.8528425</code></pre>
 <p>Mixed models can include random effects or not</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">bayes_R2</span>(sleepstudy_brms, <span class="dt">re_formula =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">bayes_R2</span>(sleepstudy_brms, <span class="dt">re_formula =</span> <span class="ot">NA</span>)</a></code></pre></div>
 <pre><code>    Estimate  Est.Error      Q2.5     Q97.5
 R2 0.2815599 0.06296109 0.1561139 0.4018669</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">bayes_R2</span>(sleepstudy_brms)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">bayes_R2</span>(sleepstudy_brms)</a></code></pre></div>
 <pre><code>    Estimate  Est.Error      Q2.5     Q97.5
 R2 0.7908612 0.01784671 0.7497048 0.8206132</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>I prefer my own package <a href="https://m-clark.github.io/visibly/reference/plot_coefficients.html">visibly</a> for this. There are a couple other plotting functions for some of the common <span class="pack">brms</span> models (e.g. glm, mixed)<a href="linear-models.html#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 

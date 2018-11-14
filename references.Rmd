@@ -1,1 +1,3 @@
 # References
+
+[Stan discussion group](https://discourse.mc-stan.org/categories) includes forums specific to <span class="pack">rstanarm</span> and <span class="pack">brms</span>

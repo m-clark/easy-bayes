@@ -81,15 +81,21 @@
 }
 
 book .book-body .page-wrapper .page-inner section.normal ul li, 
-book .book-body .page-wrapper .page-inner section.normal ul li span {
+book .book-body .page-wrapper .page-inner section.normal ul li span,
+book .book-body .page-wrapper .page-inner section.normal ul li ul li {
   font-size: 150%;
 }
 
 .book .book-body .page-wrapper .page-inner section.normal ol, 
-.book .book-body .page-wrapper .page-inner section.normal ul {
+.book .book-body .page-wrapper .page-inner section.normal ul{
   font-size: 150%;
   padding: 0 0 0 2em;
   margin: 0 0 .85em;
+}
+
+
+.book .book-body .page-wrapper .page-inner section.normal li > ul > li{
+  font-size: 66%;
 }
 
 .book .book-body {
@@ -305,9 +311,11 @@ h1 {
   width: 2em;
 }
 
-.footnotes {
+.book .book-body .page-wrapper .page-inner section.normal .footnotes p {
   color: #00000080;
+  font-size: 66%;  /* .66*150 =100 */
 }
+
 
 
 
@@ -330,6 +338,11 @@ h1 {
   position: relative;
 }
 
+/* references */
+div#refs.references {
+  color: #00000080;
+  font-size: 66%;  /* .66*150 =100 */
+}
 
 
 /* code */
@@ -466,4 +479,9 @@ table {
 div.datatables {
     margin-left: auto;     /* to center them when full is not necessary. */
     margin-right: auto;
+}
+
+
+#refs {
+  font-size: 100%;
 }
