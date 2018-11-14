@@ -96,24 +96,27 @@ Precompiled stan code
 
 Developed along with Stan team (though by one person)
 
-Good for basic to complex models.
+Good for basic to complex models
 
 Not pre-compiled
 
-- Some simpler models with less data would take longer for compilation than to actually run.
+- Some simpler models with less data would take longer for compilation than to actually run
 
-Extremely rapid feature integration.
+Extremely rapid feature integration
 
 ##  More Stan
 
-Many package to explore the results of a Stan model from any of these packages.
+Many packages to explore the results of a Stan model from any of these packages.
 
 - shinystan
-- tidybayes etc.
+- tidybayes 
+- various model-specific packages etc.
 
 
-```{r stan_getgraph, eval=F, echo=FALSE, cache=TRUE}
-# rdocumentation appears to be nearly abandoned at this point 2018-10-28.  Months long bugs of not displaying basic info on landing page, reverse dependencies have disappeared, and other fundamental problems not being fixed.
+```{r stan_getgraph, eval=T, echo=FALSE, cache=TRUE}
+# rdocumentation appears to be nearly abandoned at this point 2018-10-28.
+# Months long bugs of not displaying basic info on landing page, reverse
+# dependencies have disappeared, and other fundamental problems not being fixed.
 get_depgraph = function(pack) {
   require(httr)
   url = paste0('http://rdocumentation.org/api/packages/', pack, '/reversedependencies')
@@ -126,7 +129,8 @@ get_depgraph = function(pack) {
 stan_depgraph = get_depgraph('rstan')
 ```
 
-```{r stan_graph, echo=F, eval=F, cache=FALSE}
+```{r stan_graph, echo=F, eval=T, cache=FALSE}
+library(visNetwork)
 nodes = stan_depgraph$node_df %>% 
   rename(label=name) %>% 
   rownames_to_column(var='id') %>% 

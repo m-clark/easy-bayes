@@ -64,13 +64,87 @@ hypothesis(attendance_brms, 'progGeneral/progAcademic > 1')
 
 If there is something specific you need to do with the results, it is easy to get access to the output
 
-```{r brms_extract}
+```{r brms_extract, eval=TRUE}
 posterior_samples(attendance_brms, pars = 'math') %>% head()
 
 posterior_samples(attendance_brms, pars = 'math') %>% 
   qplot(data=., x = b_math, geom = 'density')
 ```
 
+
+
+### Tidy methods for data extraction
+
+The broom package can make your model results easier to work with
+
+```{r tidy_brms, eval=TRUE}
+library(broom)
+tidy(attendance_brms)
+```
+
+```{r tidy_kable, eval=TRUE}
+library(kableExtra)
+tidy(attendance_brms) %>% 
+  filter(grepl(term, pattern = '^b')) %>% 
+  mutate(term = c('Intercept', 'Math', 'Male', 'General', 'Academic')) %>% 
+  rename_all(str_to_title) %>% 
+  kable(digits = 2)
+```
+
+
+### tidybayes
+
+Bayesian analysis + tidy data + geoms
+
+```{r tidybayes_add1, eval=TRUE}
+library(tidybayes)
+attendance %>% 
+  add_fitted_draws(attendance_brms)
+```
+
+
+```{r tidybayes_add2, echo=FALSE}
+
+attendance %>%
+  data_grid(math = seq_along(math),
+            gender = levels(gender),
+            prog = levels(prog)) %>%  # modelr package
+  add_predicted_draws(attendance_brms) %>%
+  ggplot(aes(x = math)) +
+  stat_lineribbon(aes(y = .prediction), .width = c(.99, .95, .8, .5)) +
+  geom_point(aes(y = daysabs), data = attendance, alpha=.25) +
+  scico::scale_fill_scico_d(alpha=.5, palette = 'tokyo')
+```
+
+
+
+```{r tidybayes_add3, eval=TRUE}
+sleepstudy %>%
+  modelr::data_grid(Days = Days,
+                    Subject = levels(Subject)) %>% 
+  add_predicted_draws(sleepstudy_brms) %>%
+  ggplot(aes(x = Days)) +
+  stat_lineribbon(aes(y = .prediction), 
+                  color = NineteenEightyR::electronic_night()[1],
+                  .width = seq(.5, .99, by = .01), 
+                  alpha = .5,
+                  show.legend = F) +
+  geom_point(aes(y = Reaction), data = sleepstudy, alpha=.25) +
+  scico::scale_fill_scico_d(alpha=.1, palette = 'acton', direction = -1)
+```
+
+
+Questions about <span class="pack">tidybayes</span> may be shouted across the street `r emo::ji('grinning')`
+
+- Developed by Matthew Kay Assistant Professor at UMSI
+
+
+
+
+```{r visibly, echo=FALSE}
+visibly::plot_coefficients(attendance_brms)
+visibly::plot_coefficients(sleepstudy_brms, ranef=T, which_ranef = 'Subject')[[1]]
+```
 
 
 # Model Diagnostics
@@ -90,8 +164,10 @@ Just use <span class="func">launch_shinystan</span> on any model object from <sp
 launch_shinystan(attendance_brms)
 ```
 
+<img src="img/shiny_stan.png" style="display:block; margin: 0 auto;">
 
-## pp check
+
+## Posterior Predictive Checks
 
 Posterior predictive checks can let us inspect what the model suggests for our target variable vs. what actually is the case
 
@@ -118,11 +194,12 @@ For more on this see [Ben Bolker's demonstration with lme4](https://glmm.wdfiles
 
 
 
-## loo plot
+## Observation Level
 
 We can get into observation level diagnostics as well
 
-While the process is very technical, we can use the simple visualization to note 'outliers'
+While the process is technical, we can use the simple visualization to note 'outliers'[^psis]
+- Think of it as leave-one-out (LOO) cross-validation error for a single data point
 
 Look for values above .7 (though this default can be changed)
 
@@ -132,20 +209,40 @@ title('')
 ```
 
 # Model Performance
+## Prediction
+
+The usual methods of fitted 
+
 ## Model Comparison
 
-```{r WAIC}
-WAIC(attendance_brms, attendance_brms_add_re)
+Model comparison can be achieved in much the same way we do with standard models
+
+<span class="emph">WAIC</span> = widely applicable information criterion
+-  a Bayesian AIC (lower is better)
+
+In the Bayesian context, we would have a distribution for the WAIC also
+
+
+```{r WAIC, eval=TRUE}
+waic(attendance_brms, attendance_brms_add_re)
 ```
 
-## model average
+## Model Averaging
 
-```{r}
+Why choose a model?
+
+Average predictions across models via <span class="emph">stacking</span>
+
+<!-- $$p(M_k|y) = \frac{p(y|M_k)p(M_k)}{\Sigma_{k=1}^K p(y|M_k)p(M_k)}$$ -->
+
+```{r model_averaging, echo=1, eval=3:4}
 pp_average(attendance_brms, attendance_brms_add_re)
+
+pp_average(attendance_brms, attendance_brms_add_re) %>% 
+  head()
 ```
 
 
-## prediction
 
 
 
@@ -154,3 +251,5 @@ pp_average(attendance_brms, attendance_brms_add_re)
 > The Poisson component of the Poisson-lognormal distribution accommodates integer inputs (or outputs) to describe the actual number of counts observed within a single unit or sample, while the lognormal component of the distribution describes the overdispersion in the Poisson rate parameter...
 
 <!-- https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5427491/ -->
+
+[^psis]: Pareto smoothed importance sampling.  See @vehtari_pareto_2017 and @vehtari_practical_2017 for details.

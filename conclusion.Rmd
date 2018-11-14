@@ -1,3 +1,42 @@
 # (PART\*) Part V: Conclusion {-}
 
 # Summary
+
+Implementing Bayesian methods has never been easier
+
+<span class="pack">rstanarm</span> and <span class="pack">brms</span> make allow one to worry about the concepts instead of syntax
+
+Bayesian analysis provides more ways to combat complex models, diagnosis issues, get creative with stats
+
+
+# Exercise
+
+Whether a survey respondent agrees or disagrees with a conservative statement about the role of women in society
+
+- 1974/1975 Survey
+- Women should take care of running their homes and leave running the country up to men
+- Modeled as a function of the gender and education of the respondents
+
+
+
+```{r basic_logistic_data_prep, echo=FALSE, eval=FALSE}
+data("womensrole", package = "HSAUR3")
+womensrole = womensrole %>% 
+  mutate(total = agree + disagree,
+         agree50 = agree/total >= .5)
+readr::write_csv(womensrole, 'data/womensrole.csv')
+```
+
+```{r basic_logistic, echo=-2, eval=-c(2,4)}
+data("womensrole", package = "HSAUR3")
+womensrole = readr::read_csv('data/womensrole.csv')
+womensrole_glm <- glm(cbind(agree, disagree) ~ education + gender,
+                        data = womensrole, 
+                        family = binomial)
+summary(womensrole_glm)
+```
+
+```{r basic_logistic_result, echo=FALSE, eval=FALSE}
+tidy(womensrole_glm) %>% 
+  kable_df()
+```

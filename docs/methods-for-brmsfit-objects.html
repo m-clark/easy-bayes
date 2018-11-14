@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-12">
+<meta name="date" content="2018-11-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -46,6 +46,10 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/vis-4.20.1/vis.css" rel="stylesheet" />
+<script src="libs/vis-4.20.1/vis.min.js"></script>
+<script src="libs/visNetwork-binding-2.0.4/visNetwork.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
@@ -165,7 +169,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html#example"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
@@ -182,20 +185,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i>Linear models</a></li>
 <li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
-<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a><ul>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html#tidy-methods-for-data-extraction"><i class="fa fa-check"></i>Tidy methods for data extraction</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html#tidybayes"><i class="fa fa-check"></i>tidybayes</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
 <li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
-<li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
-<li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
+<li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
+<li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-performance.html"><a href="model-performance.html"><i class="fa fa-check"></i>Model Performance</a><ul>
+<li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>Prediction</a></li>
 <li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>Model Comparison</a></li>
-<li class="chapter" data-level="" data-path="model-average.html"><a href="model-average.html"><i class="fa fa-check"></i>model average</a></li>
-<li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>prediction</a></li>
+<li class="chapter" data-level="" data-path="model-averaging.html"><a href="model-averaging.html"><i class="fa fa-check"></i>Model Averaging</a></li>
 </ul></li>
 <li class="part"><span><b>Part V: Conclusion</b></span></li>
 <li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class='after'">
@@ -240,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="methods-for-brmsfit-objects" class="section level2">
 <h2>Methods for brmsfit objects</h2>
 <p>This is all the fun stuff to play with after running a model</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">methods</span>(<span class="dt">class =</span> <span class="st">&#39;brmsfit&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">methods</span>(<span class="dt">class =</span> <span class="st">&#39;brmsfit&#39;</span>)</a></code></pre></div>
 <pre><code> [1] add_ic                  as.array                as.data.frame           as.matrix              
  [5] as.mcmc                 autocor                 bayes_factor            bayes_R2               
  [9] bridge_sampler          coef                    control_params          expose_functions       

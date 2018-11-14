@@ -2,7 +2,7 @@
 
 # Installation
 
-- <span class="pack">rstan</span> installation required.
+- <span class="pack">rstan</span> installation required
 - Installed as any other R package
 
 

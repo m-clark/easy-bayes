@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-12">
+<meta name="date" content="2018-11-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -46,6 +46,10 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/vis-4.20.1/vis.css" rel="stylesheet" />
+<script src="libs/vis-4.20.1/vis.min.js"></script>
+<script src="libs/visNetwork-binding-2.0.4/visNetwork.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
@@ -165,7 +169,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html#example"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="part"><span><b>Part III: brms</b></span></li>
 <li class="chapter" data-level="" data-path="installation.html"><a href="installation.html"><i class="fa fa-check"></i>Installation</a></li>
 <li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
@@ -182,20 +185,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i>Linear models</a></li>
 <li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
-<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a><ul>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html#tidy-methods-for-data-extraction"><i class="fa fa-check"></i>Tidy methods for data extraction</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html#tidybayes"><i class="fa fa-check"></i>tidybayes</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
 <li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
-<li class="chapter" data-level="" data-path="pp-check.html"><a href="pp-check.html"><i class="fa fa-check"></i>pp check</a></li>
-<li class="chapter" data-level="" data-path="loo-plot.html"><a href="loo-plot.html"><i class="fa fa-check"></i>loo plot</a></li>
+<li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
+<li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-performance.html"><a href="model-performance.html"><i class="fa fa-check"></i>Model Performance</a><ul>
+<li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>Prediction</a></li>
 <li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>Model Comparison</a></li>
-<li class="chapter" data-level="" data-path="model-average.html"><a href="model-average.html"><i class="fa fa-check"></i>model average</a></li>
-<li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>prediction</a></li>
+<li class="chapter" data-level="" data-path="model-averaging.html"><a href="model-averaging.html"><i class="fa fa-check"></i>Model Averaging</a></li>
 </ul></li>
 <li class="part"><span><b>Part V: Conclusion</b></span></li>
 <li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class='after'">
@@ -240,10 +247,183 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="extracting-results" class="section level2">
 <h2>Extracting results</h2>
 <p>If there is something specific you need to do with the results, it is easy to get access to the output</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">qplot</span>(<span class="dt">data=</span>., <span class="dt">x =</span> b_math, <span class="dt">geom =</span> <span class="st">&#39;density&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>        b_math
+1 -0.005945358
+2 -0.006030774
+3 -0.009060251
+4 -0.007864525
+5 -0.006196730
+6 -0.006510296</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">  </span><span class="kw">qplot</span>(<span class="dt">data=</span>., <span class="dt">x =</span> b_math, <span class="dt">geom =</span> <span class="st">&#39;density&#39;</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/brms_extract-1.svg" width="768" style="display: block; margin: auto;" /></p>
+<div id="tidy-methods-for-data-extraction" class="section level3">
+<h3>Tidy methods for data extraction</h3>
+<p>The broom package can make your model results easier to work with</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">tidy</span>(attendance_brms)</a></code></pre></div>
+<pre><code>            term      estimate    std.error         lower         upper
+1    b_Intercept  1.486260e+00 0.0807602243  1.353464e+00  1.613702e+00
+2         b_math -6.947692e-03 0.0009433085 -8.589656e-03 -5.444662e-03
+3   b_genderMale -2.450094e-01 0.0444296384 -3.257716e-01 -1.680750e-01
+4  b_progGeneral  1.273018e+00 0.0809187810  1.148042e+00  1.398220e+00
+5 b_progAcademic  8.458137e-01 0.0716282175  7.205499e-01  9.549422e-01
+6           lp__ -1.320972e+03 1.6287393824 -1.324051e+03 -1.319034e+03</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">library</span>(kableExtra)</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">tidy</span>(attendance_brms) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">grepl</span>(term, <span class="dt">pattern =</span> <span class="st">&#39;^b&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="st">&#39;Math&#39;</span>, <span class="st">&#39;Male&#39;</span>, <span class="st">&#39;General&#39;</span>, <span class="st">&#39;Academic&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="st">  </span><span class="kw">rename_all</span>(str_to_title) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std.error
+</th>
+<th style="text-align:right;">
+Lower
+</th>
+<th style="text-align:right;">
+Upper
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+1.49
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+1.61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Math
+</td>
+<td style="text-align:right;">
+-0.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+-0.01
+</td>
+<td style="text-align:right;">
+-0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:right;">
+-0.25
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+General
+</td>
+<td style="text-align:right;">
+1.27
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+1.15
+</td>
+<td style="text-align:right;">
+1.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Academic
+</td>
+<td style="text-align:right;">
+0.85
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tidybayes" class="section level3">
+<h3>tidybayes</h3>
+<p>Bayesian analysis + tidy data + geoms</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">library</span>(tidybayes)</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">attendance <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">add_fitted_draws</span>(attendance_brms)</a></code></pre></div>
+<pre><code># A tibble: 125,600 x 10
+# Groups:   id, gender, math, daysabs, prog, .row [314]
+   id    gender  math daysabs prog      .row .chain .iteration .draw .value
+   &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;int&gt;  &lt;int&gt;      &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
+ 1 1001  Male      63       4 Academic     1     NA         NA     1   5.05
+ 2 1001  Male      63       4 Academic     1     NA         NA     2   5.52
+ 3 1001  Male      63       4 Academic     1     NA         NA     3   4.83
+ 4 1001  Male      63       4 Academic     1     NA         NA     4   4.97
+ 5 1001  Male      63       4 Academic     1     NA         NA     5   5.41
+ 6 1001  Male      63       4 Academic     1     NA         NA     6   4.98
+ 7 1001  Male      63       4 Academic     1     NA         NA     7   5.37
+ 8 1001  Male      63       4 Academic     1     NA         NA     8   5.30
+ 9 1001  Male      63       4 Academic     1     NA         NA     9   4.99
+10 1001  Male      63       4 Academic     1     NA         NA    10   5.20
+# ... with 125,590 more rows</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">sleepstudy <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span>modelr<span class="op">::</span><span class="kw">data_grid</span>(<span class="dt">Days =</span> Days,</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">                    <span class="dt">Subject =</span> <span class="kw">levels</span>(Subject)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">  </span><span class="kw">add_predicted_draws</span>(sleepstudy_brms) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Days)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb42-6" data-line-number="6"><span class="st">  </span><span class="kw">stat_lineribbon</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .prediction), </a>
+<a class="sourceLine" id="cb42-7" data-line-number="7">                  <span class="dt">color =</span> NineteenEightyR<span class="op">::</span><span class="kw">electronic_night</span>()[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb42-8" data-line-number="8">                  <span class="dt">.width =</span> <span class="kw">seq</span>(.<span class="dv">5</span>, <span class="fl">.99</span>, <span class="dt">by =</span> <span class="fl">.01</span>), </a>
+<a class="sourceLine" id="cb42-9" data-line-number="9">                  <span class="dt">alpha =</span> <span class="fl">.5</span>,</a>
+<a class="sourceLine" id="cb42-10" data-line-number="10">                  <span class="dt">show.legend =</span> F) <span class="op">+</span></a>
+<a class="sourceLine" id="cb42-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Reaction), <span class="dt">data =</span> sleepstudy, <span class="dt">alpha=</span>.<span class="dv">25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb42-12" data-line-number="12"><span class="st">  </span>scico<span class="op">::</span><span class="kw">scale_fill_scico_d</span>(<span class="dt">alpha=</span>.<span class="dv">1</span>, <span class="dt">palette =</span> <span class="st">&#39;acton&#39;</span>, <span class="dt">direction =</span> <span class="dv">-1</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/tidybayes_add3-1.svg" width="768" style="display: block; margin: auto;" /></p>
+<p>Questions about <span class="pack">tidybayes</span> may be shouted across the street 😀</p>
+<ul>
+<li>Developed by Matthew Kay Assistant Professor at UMSI</li>
+</ul>
+</div>
 </div>
 <!-- </div> -->
             </section>
