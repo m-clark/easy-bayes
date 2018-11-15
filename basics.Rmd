@@ -7,32 +7,29 @@ The classic formula ($\theta$ = parameters):
 $$p(\theta|\mathcal{Data}) = \frac{p(\mathcal{Data}|\theta)p(\theta)}{p(\mathcal{Data})}$$
 
 
-Conceptually, we can think about it in different ways.
+Conceptually, we can think about it in different ways
 
 $$\mathrm{posterior} \propto likelihood * prior$$
 
-Standard methods you are already familiar with begin and end with likelihood.
+Standard methods you are already familiar with begin and end with likelihood
 
-They can be seen as Bayesian analysis with uninformative priors.
+They can be seen as Bayesian analysis with uninformative priors
 
-Alternatively, we can think also in terms of the posterior as the combination hypothesis, and evidence, in the form of data. 
-
-<br>
+Alternatively, we can think also in terms of the posterior as the combination hypothesis, and evidence, in the form of data.<br>
 
 $$p(hypothesis|data) \propto p(data|hypothesis)p(hypothesis)$$
 
-$$$$
-
 $$\text{updated belief} = \text{current evidence} * \text{prior belief or evidence}$$
-
+<br>
 Some key distinctions: 
 
- - Distributions and uncertainty estimation instead of point estimates
- - However, given the distribution for a parameter, we still obtain point estimates
- - Easy model criticism
+- Focus on distributions and uncertainty estimation instead of point estimates
+- More natural interpretation of results
+- Easy model criticism
 
 http://micl.shinyapps.io/prior2post/
 
+<br>
 <img src="img/bayes_doc/modified_bayes_theorem.png" style="display:block; margin: 0 auto;" width=50%>
 
 # Advantages

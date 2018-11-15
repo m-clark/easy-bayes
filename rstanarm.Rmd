@@ -75,13 +75,33 @@ library(rstanarm)
 attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
                             data = attendance, 
                             family = poisson)
-summary(attendance_bglm, digits = 3)
+summary(attendance_bglm, digits = 2, prob=c(.025, .5, .975))
 ```
 
 ```{r bayesian_poisson_pretty, eval=TRUE, echo=FALSE, cache.rebuild=F}
 load('data/attendance_bayes.RData')
-print(attendance_bglm, digits = 3)
+summary(attendance_bglm, digits = 2, prob=c(.5, .025, .975))
 ```
+
+Summary Info:
+
+This is the same as you see in every other regression model:
+
+- mean: the point estimate for the parameter
+- sd: standard error for the point estimate
+- quantiles: are whatever you want, but here represent the median and 95% <span class="emph">uncertainty inteval</span>
+
+Additional:
+
+- mean_PPD: mean of the posterior predictive distribution (hopefully on par with the mean of the target variable (`daysabs`))
+- log-posterior: similar to the log-likelihood from maximum likelihood, but for the Bayesian case
+
+
+Diagnostics for quick eyeball inspection:
+
+- <span class="emph">Monte Carlo Standard Error</span>: The standard error of the *mean* of the posterior draws. Want mcse than 10% of the posterior standard deviation.
+- <span class="emph">$n_{eff}$</span>: is an estimate of the effective number of independent draws from the posterior distribution of the estimand of interest. Because the draws within a chain are not independent if there is autocorrelation, the effective sample size will be smaller than the total number of iterations. Should be greater than 10% of max.
+- <span class="emph">$\hat{R}$</span>: measures the ratio of the average variance of samples within each chain to the variance of the pooled samples across chains; if all chains are at equilibrium, these will be the same and R̂  will be one. Desire less than 1.1.
 
 ### Adding more options
 

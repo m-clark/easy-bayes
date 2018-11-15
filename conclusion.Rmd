@@ -4,9 +4,13 @@
 
 Implementing Bayesian methods has never been easier
 
-<span class="pack">rstanarm</span> and <span class="pack">brms</span> make allow one to worry about the concepts instead of syntax
+<span class="pack">rstanarm</span> and <span class="pack">brms</span> allow one to worry about the concepts instead of syntax
 
-Bayesian analysis provides more ways to combat complex models, diagnosis issues, get creative with results
+Bayesian analysis provides additional ways to:
+
+- combat complex models
+- diagnosis issues
+- get creative with results
 
 Even standard/traditional/basic models become more fun!
 
@@ -19,8 +23,9 @@ Whether a survey respondent agrees or disagrees with a conservative statement ab
 
 - 1974/1975 Survey
 - Women should take care of running their homes and leave running the country up to men
-- Modeled as a function of the gender and education of the respondents
+- Modeled as a function of the gender and years of education (0-20) of the respondents
 - Data from the <span class="pack">HSAUR3</span> package
+- Observations are aggregate counts at education levels for men and women
 
 
 
@@ -32,16 +37,31 @@ womensrole = womensrole %>%
 readr::write_csv(womensrole, 'data/womensrole.csv')
 ```
 
-```{r basic_logistic, echo=-2, eval=-c(2,4)}
+Run a binomial logistic regression modeling the proportion of those who agreed 
+- If you are more familiar with binary logistic regression, you may 'unrole' this data to be disagree-agree for each individual (the analysis is the same)
+
+
+```{r basic_logistic}
 data("womensrole", package = "HSAUR3")
-womensrole = readr::read_csv('data/womensrole.csv')
+
+# alternative not requiring package
+womensrole = readr::read_csv('https://github.com/m-clark/easy-bayes/raw/master/data/womensrole.csv')
+
 womensrole_glm <- glm(cbind(agree, disagree) ~ education + gender,
                         data = womensrole, 
                         family = binomial)
 summary(womensrole_glm)
 ```
 
-```{r basic_logistic_result, echo=FALSE, eval=FALSE}
-tidy(womensrole_glm) %>% 
-  kable_df()
+Now use <span class="pack">brms</span> or <span class="pack">rstanarm</span> to run the same analysis
+
+Explore it fully by:
+
+- plotting the coefficients (<span class="func">stanplot</span>)
+- use <span class="pack">shinystan</span> to explore diagnostics (<span class="func">launch_shinystan</span>)
+- explore the posterior predictive distribtution (<span class="func">pp_check</span>)
+- plot the marginal effect of the predictor variables (<span class="func">marginal_effects</span>)
+
+```{r basic_logistic_result}
+my_model_bayes = ?
 ```

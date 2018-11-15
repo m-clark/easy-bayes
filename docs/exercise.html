@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-14">
+<meta name="date" content="2018-11-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -251,14 +251,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>1974/1975 Survey</li>
 <li>Women should take care of running their homes and leave running the country up to men</li>
-<li>Modeled as a function of the gender and education of the respondents</li>
+<li>Modeled as a function of the gender and years of education (0-20) of the respondents</li>
 <li>Data from the <span class="pack">HSAUR3</span> package</li>
+<li>Observations are aggregate counts at education levels for men and women</li>
 </ul>
+<p>Run a binomial logistic regression modeling the proportion of those who agreed
+- If you are more familiar with binary logistic regression, you may ‘unrole’ this data to be disagree-agree for each individual (the analysis is the same)</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;womensrole&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;HSAUR3&quot;</span>)</a>
-<a class="sourceLine" id="cb64-2" data-line-number="2">womensrole_glm &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(agree, disagree) <span class="op">~</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span>gender,</a>
-<a class="sourceLine" id="cb64-3" data-line-number="3">                        <span class="dt">data =</span> womensrole, </a>
-<a class="sourceLine" id="cb64-4" data-line-number="4">                        <span class="dt">family =</span> binomial)</a>
-<a class="sourceLine" id="cb64-5" data-line-number="5">## summary(womensrole_glm)</a></code></pre></div>
+<a class="sourceLine" id="cb64-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="co"># alternative not requiring package</span></a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">womensrole =<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&#39;https://github.com/m-clark/easy-bayes/raw/master/data/womensrole.csv&#39;</span>)</a>
+<a class="sourceLine" id="cb64-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb64-6" data-line-number="6">womensrole_glm &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(agree, disagree) <span class="op">~</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span>gender,</a>
+<a class="sourceLine" id="cb64-7" data-line-number="7">                        <span class="dt">data =</span> womensrole, </a>
+<a class="sourceLine" id="cb64-8" data-line-number="8">                        <span class="dt">family =</span> binomial)</a>
+<a class="sourceLine" id="cb64-9" data-line-number="9"><span class="kw">summary</span>(womensrole_glm)</a></code></pre></div>
+<p>Now use <span class="pack">brms</span> or <span class="pack">rstanarm</span> to run the same analysis</p>
+<p>Explore it fully by:</p>
+<ul>
+<li>plotting the coefficients (<span class="func">stanplot</span>)</li>
+<li>use <span class="pack">shinystan</span> to explore diagnostics (<span class="func">launch_shinystan</span>)</li>
+<li>explore the posterior predictive distribtution (<span class="func">pp_check</span>)</li>
+<li>plot the marginal effect of the predictor variables (<span class="func">marginal_effects</span>)</li>
+</ul>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">my_model_bayes =<span class="st"> </span>?</a></code></pre></div>
 
 </div>
             </section>
