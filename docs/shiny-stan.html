@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -245,10 +247,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="shiny-stan" class="section level2">
 <h2>Shiny stan</h2>
+<p>A basic trace/density plot (boring)</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">plot</span>(attendance_brms)</a></code></pre></div>
 <p><span class="pack">shinystan</span> allows for interactive exploration of model diagnostics</p>
 <p>Just use <span class="func">launch_shinystan</span> on any model object from <span class="pack">rstan</span>, <span class="pack">rstanarm</span>, or <span class="pack">brms</span></p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">launch_shinystan</span>(attendance_brms)</a></code></pre></div>
-<p><img src="img/shiny_stan.png" style="display:block; margin: 0 auto;"></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">launch_shinystan</span>(attendance_brms)</a></code></pre></div>
+<p><img src="img/shiny_stan_1.png" style="display:block; margin: 0 auto;" width=150%></p>
+<p><img src="img/shiny_stan_2.png" style="display:block; margin: 0 auto;" width=150%></p>
+<p><img src="img/shiny_stan_3.png" style="display:block; margin: 0 auto;" width=150%></p>
 </div>
             </section>
 

@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="shortcut icon" href="img/R.ico" type="image/x-icon">
-<link rel="prev" href="shiny-stan.html">
+<link rel="prev" href="shinystan.html">
 <link rel="next" href="observation-level.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -190,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
 <li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
 <li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
@@ -245,21 +247,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="posterior-predictive-checks" class="section level2">
 <h2>Posterior Predictive Checks</h2>
-<p><span class="emph">Posterior predictive checks</span> can let us inspect what the model suggests for our target variable vs. what actually is the case</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms)</a></code></pre></div>
+<p><span class="emph">Posterior predictive checks</span> can let us inspect what the model suggests for our target variable vs. what actually is the case[^ppcheck]</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/pp_check-1.svg" width="768" style="display: block; margin: auto;" /></p>
-<p>The Poisson’s underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches. Interestingly, for Poisson models we can have a random effect per observation (even in the non-Bayesian context)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a> to model additional variance. In this case, our pp_check suggests a much better result.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">attendance_brms_add_re =<span class="st"> </span><span class="kw">update</span>(attendance_brms, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id), </a>
-<a class="sourceLine" id="cb47-2" data-line-number="2">                                <span class="dt">newdata =</span> attendance)</a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="kw">pp_check</span>(attendance_brms_add_re)</a></code></pre></div>
+<p>Lots to play with</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms, <span class="dt">type=</span><span class="st">&#39;x&#39;</span>)</a></code></pre></div>
+<pre><code>Error: Type &#39;x&#39; is not a valid ppc type. Valid types are:
+&#39;bars&#39;, &#39;bars_grouped&#39;, &#39;boxplot&#39;, &#39;data&#39;, &#39;dens&#39;, &#39;dens_overlay&#39;, &#39;ecdf_overlay&#39;, &#39;error_binned&#39;, &#39;error_hist&#39;, &#39;error_hist_grouped&#39;, &#39;error_scatter&#39;, &#39;error_scatter_avg&#39;, &#39;error_scatter_avg_vs_x&#39;, &#39;freqpoly&#39;, &#39;freqpoly_grouped&#39;, &#39;hist&#39;, &#39;intervals&#39;, &#39;intervals_data&#39;, &#39;intervals_grouped&#39;, &#39;loo_intervals&#39;, &#39;loo_pit&#39;, &#39;loo_pit_overlay&#39;, &#39;loo_pit_qq&#39;, &#39;loo_ribbon&#39;, &#39;ribbon&#39;, &#39;ribbon_data&#39;, &#39;ribbon_grouped&#39;, &#39;rootogram&#39;, &#39;scatter&#39;, &#39;scatter_avg&#39;, &#39;scatter_avg_grouped&#39;, &#39;stat&#39;, &#39;stat_2d&#39;, &#39;stat_freqpoly_grouped&#39;, &#39;stat_grouped&#39;, &#39;violin_grouped&#39;</code></pre>
+<p>How well did we capture the mean, or some quantile?</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms, <span class="dt">type=</span><span class="st">&#39;stat&#39;</span>, <span class="dt">stat=</span><span class="st">&#39;mean&#39;</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/pp_stat-1.svg" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">q75 &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">quantile</span>(y, <span class="fl">0.75</span>) </a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">pp_check</span>(attendance_brms, <span class="dt">type=</span><span class="st">&#39;stat&#39;</span>, <span class="dt">stat=</span><span class="st">&#39;q75&#39;</span>, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/pp_stat-2.svg" width="768" style="display: block; margin: auto;" /></p>
+<p>What can we say about the predictive error?</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms, <span class="dt">type=</span><span class="st">&#39;error_scatter_avg&#39;</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/pp_error_scatter_avg-1.svg" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms, <span class="dt">type=</span><span class="st">&#39;intervals&#39;</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/pp_intervals-1.svg" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">pp_check</span>(attendance_brms, <span class="dt">x =</span> <span class="st">&#39;math&#39;</span>, <span class="dt">type=</span><span class="st">&#39;error_scatter_avg_vs_x&#39;</span>)</a></code></pre></div>
+<p><img src="easy-bayes_files/figure-html/pp_error_scatter_avg_vs_x-1.svg" width="768" style="display: block; margin: auto;" /></p>
+<p>The Poisson’s underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches. Interestingly, for Poisson models we can have a random effect per observation<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> to model additional variance. In this case, our pp_check suggests a much better result.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">attendance_brms_add_re =<span class="st"> </span><span class="kw">update</span>(attendance_brms, . <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>id), </a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">                                <span class="dt">newdata =</span> attendance)</a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="kw">pp_check</span>(attendance_brms_add_re)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/pp_check2-1.svg" width="768" style="display: block; margin: auto;" /></p>
 <p>For more on this see <a href="https://glmm.wdfiles.com/local--files/examples/overdispersion.pdf">Ben Bolker’s demonstration with lme4</a>.</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="5">
-<li id="fn5"><p>This essentially changes the model to incorporate a Poisson log-normal distribution. As <span class="citation">Montesinos-López et al. (<a href="#ref-montesinos-lopez_bayesian_2017">2017</a>)</span> describe:
-&gt; The Poisson component of the Poisson-lognormal distribution accommodates integer inputs (or outputs) to describe the actual number of counts observed within a single unit or sample, while the lognormal component of the distribution describes the overdispersion in the Poisson rate parameter…<a href="posterior-predictive-checks.html#fnref5" class="footnote-back">↩</a></p></li>
+<ol start="6">
+<li id="fn6"><p>This essentially changes the model to incorporate a Poisson log-normal distribution. As <span class="citation">Montesinos-López et al. (<a href="#ref-montesinos-lopez_bayesian_2017">2017</a>)</span> describe:
+&gt; The Poisson component of the Poisson-lognormal distribution accommodates integer inputs (or outputs) to describe the actual number of counts observed within a single unit or sample, while the lognormal component of the distribution describes the overdispersion in the Poisson rate parameter…<a href="posterior-predictive-checks.html#fnref6" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -267,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="shiny-stan.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="shinystan.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="observation-level.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

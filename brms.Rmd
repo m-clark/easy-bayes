@@ -60,7 +60,7 @@ summary(sleepstudy_brms)
 Just with mixed models, we already start to see what <span class="pack">brms</span> brings to the table
 
 - additional distributions: ordinal, zero-inflated, beta and many more
-- Correlated residuals, Additive mixed models, non-linear with known form, heterogenous variance components, correlated random effects across multivariate outcomes, and more
+- Correlated residuals, Additive mixed models, non-linear with known form, heterogeneous variance components, correlated random effects across multivariate outcomes, and more
 
 ```{r examples}
 # auto regressive residual structure
@@ -95,7 +95,7 @@ model <- brm(f, data = mydata)
 ## brms: Mo' models, mo' models, mo' models!
 
 
-- GAM (gp)
+- GAM
 - Distributional response (e.g. model the variance as well as the mean)
 - Gaussian Processes
 - ZIP

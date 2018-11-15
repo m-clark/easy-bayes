@@ -13,7 +13,7 @@
 Get a simple coefficient plot[^visibly]
 
 ```{r stanplot_coef, eval=TRUE}
-stanplot(attendance_brms)
+stanplot(attendance_brms, pars = c('math', 'gender', 'prog'))
 ```
 
 
@@ -29,21 +29,22 @@ bayes_R2(fit, digits=2)
 Mixed models can include random effects or not
 
 ```{r brms_R2_mixed, eval=TRUE}
-bayes_R2(sleepstudy_brms, re_formula = NA)
+bayes_R2(sleepstudy_brms, re_formula = NA) # not included
 ```
 
 ```{r brms_R2_mixed_with_re, eval=TRUE}
-bayes_R2(sleepstudy_brms)
+bayes_R2(sleepstudy_brms) # included
 ```
 
 
 [^visibly]: I prefer my own package [visibly](https://m-clark.github.io/visibly/reference/plot_coefficients.html) for this.  There are a couple other plotting functions for some of the common <span class="pack">brms</span> models (e.g. glm, mixed)
 
 
+
 ## Marginal effects
 
 
-<span class="pack">brms</span> allows one to to plot marginal effects
+<span class="pack">brms</span> allows one to plot marginal effects
 
 For standard linear models this is useful for group comparisons and interactions
 
@@ -53,10 +54,38 @@ For nonlinear models (glm and beyond) useful for any effect
 marginal_effects(attendance_brms)
 ```
 
+These are <span class="objclass">ggplot</span> objects, so you can modify them accordingly
+
+```{r brms_marginal_gg, eval=TRUE}
+math_me = marginal_effects(attendance_brms, effects = 'math')
+plot(math_me, 
+     plot = F,
+     rug = T,
+     rug_args = list(color='darkred'), 
+     points = T,
+     point_args = list(color='papayawhip'))[[1]] +
+  theme_black()
+```
+
+
+Example with smooth interaction
+
+```{r brms_marginal_inter, echo=TRUE}
+attendance_brms_inter = update(attendance_brms,  ~ . - math + s(math, by=gender), cores=4)
+```
+
+```{r brms_marginal_inter_pretty, eval=TRUE}
+marginal_smooths(attendance_brms_inter)
+```
+
+
+
+
+
 
 ## Hypothesis tests
 
-Null hypothesis testing doesn't apply to the Bayesian context
+Null hypothesis testing doesn't apply to the Bayesian context (thankfully)
 
 However, we can still ask questions about the probability of certain outcomes
 
@@ -71,7 +100,9 @@ hypothesis(attendance_brms, 'progGeneral/progAcademic > 1')
 
 ## Extracting results
 
-If there is something specific you need to do with the results, it is easy to get access to the output
+It is easy to get access to the output
+
+Example: grab draws from the posterior for math
 
 ```{r brms_extract, eval=TRUE}
 posterior_samples(attendance_brms, pars = 'math') %>% head()
@@ -84,7 +115,9 @@ posterior_samples(attendance_brms, pars = 'math') %>%
 
 ### Tidy methods for data extraction
 
-The broom package can make your model results easier to work with
+<img src="img/broom_logo.png" style="display:block; margin: 0 auto;" width=10%>
+
+The <span class="pack">broom</span> package can make your model results easier to work with[^broom]
 
 ```{r tidy_brms, eval=TRUE}
 library(broom)
@@ -103,9 +136,13 @@ tidy(attendance_brms) %>%
 
 ### tidybayes
 
+<img src="img/tb_logo.svg" style="display:block; margin: 0 auto;">
+
 Bayesian analysis + tidy data + geoms
 
 ```{r tidybayes_add1, eval=TRUE}
+# add fitted values given the posterior draws for model parameters
+
 library(tidybayes)
 attendance %>% 
   add_fitted_draws(attendance_brms)
@@ -113,7 +150,6 @@ attendance %>%
 
 
 ```{r tidybayes_add2, echo=FALSE}
-
 attendance %>%
   data_grid(math = seq_along(math),
             gender = levels(gender),
@@ -163,7 +199,15 @@ Numerous model diagnostics are available to the Bayesian analyst
 
 The Stan ecosystem makes exploring these not only easy, but fun!
 
-## Shiny stan
+## shinystan
+
+A basic trace/density plot (boring)
+
+```{r plot_a_stan}
+plot(attendance_brms)
+```
+
+
 
 <span class="pack">shinystan</span> allows for interactive exploration of model diagnostics
 
@@ -173,18 +217,55 @@ Just use <span class="func">launch_shinystan</span> on any model object from <sp
 launch_shinystan(attendance_brms)
 ```
 
-<img src="img/shiny_stan.png" style="display:block; margin: 0 auto;">
+<img src="img/shiny_stan_1.png" style="display:block; margin: 0 auto;" width=150%>
+
+
+<img src="img/shiny_stan_2.png" style="display:block; margin: 0 auto;" width=150%>
+
+
+<img src="img/shiny_stan_3.png" style="display:block; margin: 0 auto;" width=150%>
 
 
 ## Posterior Predictive Checks
 
-<span class="emph">Posterior predictive checks</span> can let us inspect what the model suggests for our target variable vs. what actually is the case
+<span class="emph">Posterior predictive checks</span> can let us inspect what the model suggests for our target variable vs. what actually is the case[^ppcheck]
 
 ```{r pp_check, eval=TRUE}
 pp_check(attendance_brms)
 ```
 
-The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation (even in the non-Bayesian context)[^pln] to model additional variance.  In this case, our pp_check suggests a much better result.
+Lots to play with
+
+```{r pp_error, eval=TRUE, error=TRUE}
+pp_check(attendance_brms, type='x')
+```
+
+How well did we capture the mean, or some quantile?
+
+```{r pp_stat, eval=TRUE}
+pp_check(attendance_brms, type='stat', stat='mean')
+
+q75 <- function(y) quantile(y, 0.75) 
+pp_check(attendance_brms, type='stat', stat='q75', nsamples = 100)
+```
+
+
+What can we say about the predictive error?
+
+```{r pp_error_scatter_avg, eval=TRUE}
+pp_check(attendance_brms, type='error_scatter_avg')
+```
+
+```{r pp_intervals, eval=TRUE}
+pp_check(attendance_brms, type='intervals')
+```
+
+```{r pp_error_scatter_avg_vs_x, eval=TRUE}
+pp_check(attendance_brms, x = 'math', type='error_scatter_avg_vs_x')
+```
+
+
+The Poisson's underlying assumption of the mean equaling the variance rarely holds with typical data. One way to handle overdispersion in count models is to move to something like negative binomial or other approaches.  Interestingly, for Poisson models we can have a random effect per observation[^pln] to model additional variance.  In this case, our pp_check suggests a much better result.
 
 ```{r pp_check2_init}
 attendance_brms_add_re = update(attendance_brms, . ~ . + (1|id), 
@@ -208,6 +289,7 @@ For more on this see [Ben Bolker's demonstration with lme4](https://glmm.wdfiles
 We can get into observation level diagnostics as well
 
 While the process is technical, we can use the simple visualization to note 'outliers'[^psis]
+
 - Think of it as leave-one-out (LOO) cross-validation error for a single data point
 
 Look for values above .7 (though this default can be changed)
@@ -220,13 +302,17 @@ title('')
 # Model Performance
 ## Prediction
 
-The usual methods of fitted 
+The usual methods of <span class="func">fitted</span> and <span class="func">predict</span> can be used
+
+- summary
+- raw
 
 ## Model Comparison
 
 Model comparison can be achieved in much the same way we do with standard models
 
 <span class="emph">WAIC</span> = widely applicable information criterion
+
 -  a Bayesian AIC (lower is better)
 
 In the Bayesian context, we would have a distribution for the WAIC also
@@ -262,3 +348,8 @@ pp_average(attendance_brms, attendance_brms_add_re) %>%
 <!-- https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5427491/ -->
 
 [^psis]: Pareto smoothed importance sampling.  See @vehtari_pareto_2017 and @vehtari_practical_2017 for details.
+
+[^broom]: 
+
+[]
+The posterior predictive distribution is the distribution of the outcome variable implied by a model after using the observed data y (a vector of outcome values), and typically predictors X, to update our beliefs about the unknown parameters θ in the model. For each draw of the parameters θ from the posterior distribution p(θ | y, X) we generate an entire vector of outcomes.

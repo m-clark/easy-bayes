@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -190,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
 <li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
 <li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
@@ -245,9 +247,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="hypothesis-tests" class="section level2">
 <h2>Hypothesis tests</h2>
-<p>Null hypothesis testing doesn’t apply to the Bayesian context</p>
+<p>Null hypothesis testing doesn’t apply to the Bayesian context (thankfully)</p>
 <p>However, we can still ask questions about the probability of certain outcomes</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">attendance_brms</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">attendance_brms</a></code></pre></div>
 <pre><code> Family: poisson 
   Links: mu = log 
 Formula: daysabs ~ math + gender + prog 
@@ -266,14 +268,14 @@ progAcademic     0.85      0.07     0.70     0.99        404 1.00
 Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
 is a crude measure of effective sample size, and Rhat is the potential 
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;genderMale &lt; -.2&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;genderMale &lt; -.2&#39;</span>)</a></code></pre></div>
 <pre><code>Hypothesis Tests for class b:
               Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
 1 (genderMale)-(-.2) &lt; 0    -0.05      0.04     -Inf     0.03        5.9      0.86     
 ---
 &#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;progGeneral/progAcademic &gt; 1&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">hypothesis</span>(attendance_brms, <span class="st">&#39;progGeneral/progAcademic &gt; 1&#39;</span>)</a></code></pre></div>
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
 1 (progGeneral/prog... &gt; 0     0.51      0.09     0.37      Inf        Inf         1    *

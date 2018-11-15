@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -190,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
 <li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
 <li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
@@ -245,8 +247,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="extracting-results" class="section level2">
 <h2>Extracting results</h2>
-<p>If there is something specific you need to do with the results, it is easy to get access to the output</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<p>It is easy to get access to the output</p>
+<p>Example: grab draws from the posterior for math</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>        b_math
 1 -0.005945358
 2 -0.006030774
@@ -254,14 +257,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 4 -0.007864525
 5 -0.006196730
 6 -0.006510296</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">  </span><span class="kw">qplot</span>(<span class="dt">data=</span>., <span class="dt">x =</span> b_math, <span class="dt">geom =</span> <span class="st">&#39;density&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">posterior_samples</span>(attendance_brms, <span class="dt">pars =</span> <span class="st">&#39;math&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">qplot</span>(<span class="dt">data=</span>., <span class="dt">x =</span> b_math, <span class="dt">geom =</span> <span class="st">&#39;density&#39;</span>)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/brms_extract-1.svg" width="768" style="display: block; margin: auto;" /></p>
 <div id="tidy-methods-for-data-extraction" class="section level3">
 <h3>Tidy methods for data extraction</h3>
-<p>The broom package can make your model results easier to work with</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">tidy</span>(attendance_brms)</a></code></pre></div>
+<p><img src="img/broom_logo.png" style="display:block; margin: 0 auto;" width=10%></p>
+<p>The <span class="pack">broom</span> package can make your model results easier to work with<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">tidy</span>(attendance_brms)</a></code></pre></div>
 <pre><code>            term      estimate    std.error         lower         upper
 1    b_Intercept  1.486260e+00 0.0807602243  1.353464e+00  1.613702e+00
 2         b_math -6.947692e-03 0.0009433085 -8.589656e-03 -5.444662e-03
@@ -269,12 +273,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 4  b_progGeneral  1.273018e+00 0.0809187810  1.148042e+00  1.398220e+00
 5 b_progAcademic  8.458137e-01 0.0716282175  7.205499e-01  9.549422e-01
 6           lp__ -1.320972e+03 1.6287393824 -1.324051e+03 -1.319034e+03</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">library</span>(kableExtra)</a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="kw">tidy</span>(attendance_brms) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">grepl</span>(term, <span class="dt">pattern =</span> <span class="st">&#39;^b&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="st">&#39;Math&#39;</span>, <span class="st">&#39;Male&#39;</span>, <span class="st">&#39;General&#39;</span>, <span class="st">&#39;Academic&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="st">  </span><span class="kw">rename_all</span>(str_to_title) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">library</span>(kableExtra)</a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="kw">tidy</span>(attendance_brms) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">grepl</span>(term, <span class="dt">pattern =</span> <span class="st">&#39;^b&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="st">&#39;Math&#39;</span>, <span class="st">&#39;Male&#39;</span>, <span class="st">&#39;General&#39;</span>, <span class="st">&#39;Academic&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-5" data-line-number="5"><span class="st">  </span><span class="kw">rename_all</span>(str_to_title) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-6" data-line-number="6"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -386,10 +390,13 @@ Academic
 </div>
 <div id="tidybayes" class="section level3">
 <h3>tidybayes</h3>
+<p><img src="img/tb_logo.svg" style="display:block; margin: 0 auto;"></p>
 <p>Bayesian analysis + tidy data + geoms</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">library</span>(tidybayes)</a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">attendance <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">  </span><span class="kw">add_fitted_draws</span>(attendance_brms)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># add fitted values given the posterior draws for model parameters</span></a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">library</span>(tidybayes)</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4">attendance <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="st">  </span><span class="kw">add_fitted_draws</span>(attendance_brms)</a></code></pre></div>
 <pre><code># A tibble: 125,600 x 10
 # Groups:   id, gender, math, daysabs, prog, .row [314]
    id    gender  math daysabs prog      .row .chain .iteration .draw .value
@@ -405,18 +412,18 @@ Academic
  9 1001  Male      63       4 Academic     1     NA         NA     9   4.99
 10 1001  Male      63       4 Academic     1     NA         NA    10   5.20
 # ... with 125,590 more rows</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">sleepstudy <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">  </span>modelr<span class="op">::</span><span class="kw">data_grid</span>(<span class="dt">Days =</span> Days,</a>
-<a class="sourceLine" id="cb44-3" data-line-number="3">                    <span class="dt">Subject =</span> <span class="kw">levels</span>(Subject)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="st">  </span><span class="kw">add_predicted_draws</span>(sleepstudy_brms) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Days)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb44-6" data-line-number="6"><span class="st">  </span><span class="kw">stat_lineribbon</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .prediction), </a>
-<a class="sourceLine" id="cb44-7" data-line-number="7">                  <span class="dt">color =</span> NineteenEightyR<span class="op">::</span><span class="kw">electronic_night</span>()[<span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb44-8" data-line-number="8">                  <span class="dt">.width =</span> <span class="kw">seq</span>(.<span class="dv">5</span>, <span class="fl">.99</span>, <span class="dt">by =</span> <span class="fl">.01</span>), </a>
-<a class="sourceLine" id="cb44-9" data-line-number="9">                  <span class="dt">alpha =</span> <span class="fl">.5</span>,</a>
-<a class="sourceLine" id="cb44-10" data-line-number="10">                  <span class="dt">show.legend =</span> F) <span class="op">+</span></a>
-<a class="sourceLine" id="cb44-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Reaction), <span class="dt">data =</span> sleepstudy, <span class="dt">alpha=</span>.<span class="dv">25</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb44-12" data-line-number="12"><span class="st">  </span>scico<span class="op">::</span><span class="kw">scale_fill_scico_d</span>(<span class="dt">alpha=</span>.<span class="dv">1</span>, <span class="dt">palette =</span> <span class="st">&#39;acton&#39;</span>, <span class="dt">direction =</span> <span class="dv">-1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">sleepstudy <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span>modelr<span class="op">::</span><span class="kw">data_grid</span>(<span class="dt">Days =</span> Days,</a>
+<a class="sourceLine" id="cb47-3" data-line-number="3">                    <span class="dt">Subject =</span> <span class="kw">levels</span>(Subject)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="st">  </span><span class="kw">add_predicted_draws</span>(sleepstudy_brms) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Days)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb47-6" data-line-number="6"><span class="st">  </span><span class="kw">stat_lineribbon</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .prediction), </a>
+<a class="sourceLine" id="cb47-7" data-line-number="7">                  <span class="dt">color =</span> NineteenEightyR<span class="op">::</span><span class="kw">electronic_night</span>()[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb47-8" data-line-number="8">                  <span class="dt">.width =</span> <span class="kw">seq</span>(.<span class="dv">5</span>, <span class="fl">.99</span>, <span class="dt">by =</span> <span class="fl">.01</span>), </a>
+<a class="sourceLine" id="cb47-9" data-line-number="9">                  <span class="dt">alpha =</span> <span class="fl">.5</span>,</a>
+<a class="sourceLine" id="cb47-10" data-line-number="10">                  <span class="dt">show.legend =</span> F) <span class="op">+</span></a>
+<a class="sourceLine" id="cb47-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Reaction), <span class="dt">data =</span> sleepstudy, <span class="dt">alpha=</span>.<span class="dv">25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb47-12" data-line-number="12"><span class="st">  </span>scico<span class="op">::</span><span class="kw">scale_fill_scico_d</span>(<span class="dt">alpha=</span>.<span class="dv">1</span>, <span class="dt">palette =</span> <span class="st">&#39;acton&#39;</span>, <span class="dt">direction =</span> <span class="dv">-1</span>)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/tidybayes_add3-1.svg" width="768" style="display: block; margin: auto;" /></p>
 <p>Questions about <span class="pack">tidybayes</span> may be shouted across the street 😀</p>
 <ul>
@@ -425,6 +432,13 @@ Academic
 </div>
 </div>
 <!-- </div> -->
+<div class="footnotes">
+<hr />
+<ol start="5">
+<li id="fn5"><p><a href="stan.html#section-1"></a>
+The posterior predictive distribution is the distribution of the outcome variable implied by a model after using the observed data y (a vector of outcome values), and typically predictors X, to update our beliefs about the unknown parameters θ in the model. For each draw of the parameters θ from the posterior distribution p(θ | y, X) we generate an entire vector of outcomes.<a href="extracting-results.html#fnref5" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>

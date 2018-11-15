@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -190,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
 <li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
 <li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
@@ -258,16 +260,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>McElreath, Richard. 2016. <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. Vol. 122. CRC Press.</p>
 </div>
 <div>
-<p>Montesinos-López, Osval A., Abelardo Montesinos-López, José Crossa, Fernando H. Toledo, José C. Montesinos-López, Pawan Singh, Philomin Juliana, and Josafhat Salinas-Ruiz. 2017. “A Bayesian Poisson-Lognormal Model for Count Data for Multiple-Trait Multiple-Environment Genomic-Enabled Prediction.” <em>G3: GenesGenomesGenetics</em> 7 (5): 1595–1606. <a href="https://doi.org/10.1534/g3.117.039974">https://doi.org/10.1534/g3.117.039974</a>.</p>
+<p>Montesinos-López, Osval A., Abelardo Montesinos-López, José Crossa, Fernando H. Toledo, José C. Montesinos-López, Pawan Singh, Philomin Juliana, and Josafhat Salinas-Ruiz. 2017. “A Bayesian Poisson-Lognormal Model for Count Data for Multiple-Trait Multiple-Environment Genomic-Enabled Prediction.” <em>G3: GenesGenomesGenetics</em> 7 (5): 1595–1606. <a href="https://doi.org/10.1534/g3.117.039974" class="uri">https://doi.org/10.1534/g3.117.039974</a>.</p>
 </div>
 <div>
-<p>Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2015. “Pareto Smoothed Importance Sampling.” <em>arXiv:1507.02646 [Stat]</em>, July. <a href="http://arxiv.org/abs/1507.02646">http://arxiv.org/abs/1507.02646</a>.</p>
+<p>Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2015. “Pareto Smoothed Importance Sampling.” <em>arXiv:1507.02646 [Stat]</em>, July. <a href="http://arxiv.org/abs/1507.02646" class="uri">http://arxiv.org/abs/1507.02646</a>.</p>
 </div>
 <div>
-<p>———. 2017. “Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and WAIC.” <em>Statistics and Computing</em> 27 (5): 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>.</p>
+<p>———. 2017. “Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and WAIC.” <em>Statistics and Computing</em> 27 (5): 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4" class="uri">https://doi.org/10.1007/s11222-016-9696-4</a>.</p>
 </div>
 </div>
 </div>
+
+
 
 
 

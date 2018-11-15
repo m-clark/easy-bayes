@@ -14,7 +14,7 @@ Compared to others:
 
 - Fast convergence
 - No conjugacy required
-- warmup vs. burnin[^warmup]
+- warm-up vs. burn-in[^warmup]
 - less autocorrelation
 - faster for more complex models
 
@@ -84,7 +84,7 @@ Developed by Stan team
 
 Good for basic to intermediate, and even somewhat complex models
 
-Precompiled stan code
+Pre-compiled Stan code
 
 - Standard models run very quickly
 - Without compilation will always be faster than <span class="pack">brms</span> for identical models
@@ -130,7 +130,7 @@ get_depgraph = function(pack) {
 stan_depgraph = get_depgraph('rstan')
 ```
 
-```{r stan_graph, echo=F, eval=T, cache=FALSE, out.width=600, out.height=1200}
+```{r stan_graph, echo=F, eval=T, cache=FALSE, out.width=600, out.height=800}
 library(visNetwork)
 nodes = stan_depgraph$node_df %>% 
   rename(label=name) %>% 

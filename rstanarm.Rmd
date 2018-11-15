@@ -67,7 +67,7 @@ attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
 attendance_brms <- brm(daysabs ~ math + gender + prog,
                        data = attendance, 
                        family = poisson, cores=4, thin=10)
-save(attendance, attendance_bglm, attendance_brms, file = 'data/attendance_bayes.RData')
+save(attendance, attendance_bglm, attendance_brms, attendance_brms_add_re, attendance_brms_inter, file = 'data/attendance_bayes.RData')
 ```
 
 ```{r bayesian_poisson}
@@ -78,14 +78,14 @@ attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
 summary(attendance_bglm, digits = 3)
 ```
 
-```{r bayesian_poisson_pretty, eval=TRUE, echo=FALSE}
+```{r bayesian_poisson_pretty, eval=TRUE, echo=FALSE, cache.rebuild=F}
 load('data/attendance_bayes.RData')
 print(attendance_bglm, digits = 3)
 ```
 
 ### Adding more options
 
-Typical configuration would involve setting priors, as well as MCMC options such as iterations, warmup, etc.
+Typical configuration would involve setting priors, as well as MCMC options such as iterations, warm-up, etc.
 
 ```{r bayesian_poisson_options, echo=T}
 attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
@@ -205,7 +205,7 @@ additional arguments specific only to those models:
 
 | Argument       | Used only in  | Applies to |
 | ------------- | ------------- | ------------- |
-| `prior_smooth` | `stan_gamm4` | Prior for hyperparameters in GAMs (lower values yield less flexible smooth functions). |
+| `prior_smooth` | `stan_gamm4` | Prior for hyper-parameters in GAMs (lower values yield less flexible smooth functions). |
 | `prior_counts` | `stan_polr` | Prior counts of an _ordinal_ outcome (when predictors at sample means). |
 | `prior_z`  |  `stan_betareg`| Coefficients in the model for `phi`.|
 | `prior_intercept_z` | `stan_betareg`| Intercept in the model for `phi`. |

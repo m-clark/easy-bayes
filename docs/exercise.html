@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -190,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
 <li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
 <li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
@@ -250,12 +252,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>1974/1975 Survey</li>
 <li>Women should take care of running their homes and leave running the country up to men</li>
 <li>Modeled as a function of the gender and education of the respondents</li>
+<li>Data from the <span class="pack">HSAUR3</span> package</li>
 </ul>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;womensrole&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;HSAUR3&quot;</span>)</a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">womensrole_glm &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(agree, disagree) <span class="op">~</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span>gender,</a>
-<a class="sourceLine" id="cb53-3" data-line-number="3">                        <span class="dt">data =</span> womensrole, </a>
-<a class="sourceLine" id="cb53-4" data-line-number="4">                        <span class="dt">family =</span> binomial)</a>
-<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="co">## summary(womensrole_glm)</span></a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;womensrole&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;HSAUR3&quot;</span>)</a>
+<a class="sourceLine" id="cb64-2" data-line-number="2">womensrole_glm &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(agree, disagree) <span class="op">~</span><span class="st"> </span>education <span class="op">+</span><span class="st"> </span>gender,</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">                        <span class="dt">data =</span> womensrole, </a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">                        <span class="dt">family =</span> binomial)</a>
+<a class="sourceLine" id="cb64-5" data-line-number="5">## summary(womensrole_glm)</a></code></pre></div>
 
 </div>
             </section>

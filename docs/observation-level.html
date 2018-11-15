@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,11 +69,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,8 +119,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css\book.css" type="text/css" />
-<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
 </head>
 
 <body>
@@ -190,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
-<li class="chapter" data-level="" data-path="shiny-stan.html"><a href="shiny-stan.html"><i class="fa fa-check"></i>Shiny stan</a></li>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
 <li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
 <li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
 </ul></li>
@@ -246,18 +248,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="observation-level" class="section level2">
 <h2>Observation Level</h2>
 <p>We can get into observation level diagnostics as well</p>
-<p>While the process is technical, we can use the simple visualization to note ‘outliers’<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>
-- Think of it as leave-one-out (LOO) cross-validation error for a single data point</p>
+<p>While the process is technical, we can use the simple visualization to note ‘outliers’<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
+<ul>
+<li>Think of it as leave-one-out (LOO) cross-validation error for a single data point</li>
+</ul>
 <p>Look for values above .7 (though this default can be changed)</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">loo</span>(attendance_brms))</a>
-<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">title</span>(<span class="st">&#39;&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">loo</span>(attendance_brms))</a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="kw">title</span>(<span class="st">&#39;&#39;</span>)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/loo_plot-1.svg" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <!-- </div> -->
 <div class="footnotes">
 <hr />
-<ol start="6">
-<li id="fn6"><p>Pareto smoothed importance sampling. See <span class="citation">Vehtari, Gelman, and Gabry (<a href="#ref-vehtari_pareto_2017">2015</a>)</span> and <span class="citation">Vehtari, Gelman, and Gabry (<a href="#ref-vehtari_practical_2017">2017</a>)</span> for details.<a href="observation-level.html#fnref6" class="footnote-back">↩</a></p></li>
+<ol start="7">
+<li id="fn7"><p>Pareto smoothed importance sampling. See <span class="citation">Vehtari, Gelman, and Gabry (<a href="#ref-vehtari_pareto_2017">2015</a>)</span> and <span class="citation">Vehtari, Gelman, and Gabry (<a href="#ref-vehtari_practical_2017">2017</a>)</span> for details.<a href="observation-level.html#fnref7" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
