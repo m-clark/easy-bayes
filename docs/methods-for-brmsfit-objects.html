@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,13 +69,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -119,8 +117,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -178,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="models-in-brms.html"><a href="models-in-brms.html"><i class="fa fa-check"></i>Models in brms</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model.html"><a href="brms-mixed-model.html"><i class="fa fa-check"></i>brms: Mixed Model</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model-extensions.html"><a href="brms-mixed-model-extensions.html"><i class="fa fa-check"></i>brms: Mixed Model Extensions</a></li>
-<li class="chapter" data-level="" data-path="brms-mo-models-mo-models-mo-models.html"><a href="brms-mo-models-mo-models-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models, mo’ models, mo’ models!</a></li>
+<li class="chapter" data-level="" data-path="brms-mo-models.html"><a href="brms-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models!</a></li>
 </ul></li>
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
@@ -248,25 +246,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="methods-for-brmsfit-objects" class="section level2">
 <h2>Methods for brmsfit objects</h2>
 <p>This is all the fun stuff to play with after running a model</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">methods</span>(<span class="dt">class =</span> <span class="st">&#39;brmsfit&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">methods</span>(<span class="dt">class =</span> <span class="st">&#39;brmsfit&#39;</span>)</a></code></pre></div>
 <pre><code> [1] add_ic                  as.array                as.data.frame           as.matrix              
  [5] as.mcmc                 autocor                 bayes_factor            bayes_R2               
  [9] bridge_sampler          coef                    control_params          expose_functions       
-[13] family                  fitted                  fixef                   formula                
-[17] getCall                 hypothesis              kfold                   launch_shinystan       
-[21] log_lik                 log_posterior           logLik                  loo_linpred            
-[25] loo_model_weights       loo_predict             loo_predictive_interval loo_R2                 
-[29] loo                     LOO                     marginal_effects        marginal_smooths       
-[33] model_weights           model.frame             neff_ratio              ngrps                  
-[37] nobs                    nsamples                nuts_params             pairs                  
-[41] parnames                plot                    post_prob               posterior_average      
-[45] posterior_interval      posterior_linpred       posterior_predict       posterior_samples      
-[49] posterior_summary       pp_average              pp_check                pp_mixture             
-[53] predict                 predictive_error        print                   prior_samples          
-[57] prior_summary           ranef                   residuals               rhat                   
-[61] stancode                standata                stanplot                summary                
-[65] tidy                    update                  VarCorr                 vcov                   
-[69] waic                    WAIC                   
+[13] extract_draws           family                  fitted                  fixef                  
+[17] formula                 getCall                 hypothesis              kfold                  
+[21] launch_shinystan        log_lik                 log_posterior           logLik                 
+[25] loo                     LOO                     loo_linpred             loo_model_weights      
+[29] loo_predict             loo_predictive_interval loo_R2                  marginal_effects       
+[33] marginal_smooths        model.frame             model_weights           neff_ratio             
+[37] ngrps                   nobs                    nsamples                nuts_params            
+[41] pairs                   parnames                plot                    post_prob              
+[45] posterior_average       posterior_interval      posterior_linpred       posterior_predict      
+[49] posterior_samples       posterior_summary       pp_average              pp_check               
+[53] pp_mixture              predict                 predictive_error        predictive_interval    
+[57] print                   prior_samples           prior_summary           ranef                  
+[61] residuals               rhat                    stancode                standata               
+[65] stanplot                summary                 tidy                    update                 
+[69] VarCorr                 vcov                    waic                    WAIC                   
 see &#39;?methods&#39; for accessing help and source code</code></pre>
 </div>
             </section>

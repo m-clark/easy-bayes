@@ -26,8 +26,8 @@ Why use?
 
 ####
 
-```{r example_code, eval=FALSE, output.var="ex1", echo=-1, cache=FALSE}
-# until this is ready just leave as R since it borks after one run and refuses to not eval
+<!-- no highlighting in doc, plus other issues -> just do as text -->
+```
 data {                      // Data block
   int<lower=1> N;           // Sample size
   int<lower=1> K;           // Dimension of model matrix
@@ -36,13 +36,13 @@ data {                      // Data block
 }
 
 parameters {                // Parameters block
-  vector[K] beta;           // Coefficient vector
+  vector[K] beta;           // Coefficients
   real<lower=0> sigma;      // Error scale
 }
 
 model {                     // Model block
   vector[N] mu;
-  mu = X * beta;            // Creation of linear predictor
+  mu = X * beta;            // Linear predictor
   
   // priors
   beta ~ normal(0, 10);
@@ -60,6 +60,8 @@ model {                     // Model block
 <br>
 
 Allows one to use Stan within R
+
+Driving force behind <span class="pack">rstanarm</span> and <span class="pack">brms</span>
 
 Model can be: 
 
@@ -92,9 +94,13 @@ Pre-compiled Stan code
 
 ## brms
 
-<img src="img/brms.png" style="display:block; margin: 0 auto;">
+<img src="img/brms.png" style="display:block; margin: 0 auto;" width=20%>
 
-Developed along with Stan team (though by one person)
+A framework for Bayesian regression models
+
+Developed in collaboration with Stan team
+
+- Almost exclusively by Paul-Christian Bürkner
 
 Good for basic to complex models
 

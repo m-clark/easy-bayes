@@ -70,8 +70,7 @@ model <- brm(Reaction ~ Days + (1 + Days|Subject),
 
 # multi-membership models
 model <- brm(DV ~ x + (1|mm(group_1, group_2)), 
-             data = sleepstudy, 
-             correlation = cor_ar(~Days))
+             data = sleepstudy)
 
 # smooth terms
 model <- brm(Reaction ~ s(Days) + (1 + Days|Subject), 
@@ -92,7 +91,7 @@ model <- brm(f, data = mydata)
 ```
 
 
-## brms: Mo' models, mo' models, mo' models!
+## brms: Mo' models!
 
 
 - GAM
@@ -128,13 +127,18 @@ fit1 <- brm(bf(y ~ x + z, sigma ~ x),
             family = gaussian)
 
 # missing values
-bform <- bf(bmi | mi() ~ age * mi(chl)) +
+bform <- 
+  bf(bmi | mi() ~ age * mi(chl)) +
   bf(chl | mi() ~ age) + set_rescor(FALSE)
+
 fit <- brm(bform, data = nhanes)
 
 # non-linear model with known form
 nlform <- bf(cum ~ ult * (1 - exp(-(dev / theta)^omega)),
-             ult ~ 1 + (1 | AY), omega ~ 1, theta ~ 1, nl = TRUE)
+             ult ~ 1 + (1 | AY), 
+             omega ~ 1, 
+             theta ~ 1, 
+             nl = TRUE)
 
 # measurement error
 fit1 <- brm(y ~ me(x1, sdx) + me(x2, sdx), 

@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,13 +69,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -119,8 +117,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -178,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="models-in-brms.html"><a href="models-in-brms.html"><i class="fa fa-check"></i>Models in brms</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model.html"><a href="brms-mixed-model.html"><i class="fa fa-check"></i>brms: Mixed Model</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model-extensions.html"><a href="brms-mixed-model-extensions.html"><i class="fa fa-check"></i>brms: Mixed Model Extensions</a></li>
-<li class="chapter" data-level="" data-path="brms-mo-models-mo-models-mo-models.html"><a href="brms-mo-models-mo-models-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models, mo’ models, mo’ models!</a></li>
+<li class="chapter" data-level="" data-path="brms-mo-models.html"><a href="brms-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models!</a></li>
 </ul></li>
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
@@ -249,9 +247,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>brms: Mixed Model</h2>
 <p>We’ll start with the mixed model from before</p>
 <p>Like <span class="pack">rstanarm</span>, <span class="pack">brms</span> follows <span class="pack">lme4</span>’s syntax</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">sleepstudy_brms &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), </a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">                       <span class="dt">data =</span> sleepstudy)</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">summary</span>(sleepstudy_brms)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">sleepstudy_brms &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">                       <span class="dt">data =</span> sleepstudy)</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">summary</span>(sleepstudy_brms)</a></code></pre></div>
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
 Formula: Reaction ~ Days + (1 + Days | Subject) 

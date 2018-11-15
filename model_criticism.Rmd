@@ -119,6 +119,8 @@ posterior_samples(attendance_brms, pars = 'math') %>%
 
 The <span class="pack">broom</span> package can make your model results easier to work with[^broom]
 
+Convert your results to a tidy data frame and go from there!
+
 ```{r tidy_brms, eval=TRUE}
 library(broom)
 tidy(attendance_brms)
@@ -296,7 +298,6 @@ Look for values above .7 (though this default can be changed)
 
 ```{r loo_plot, eval=TRUE}
 plot(loo(attendance_brms))
-title('')
 ```
 
 # Model Performance
@@ -349,7 +350,6 @@ pp_average(attendance_brms, attendance_brms_add_re) %>%
 
 [^psis]: Pareto smoothed importance sampling.  See @vehtari_pareto_2017 and @vehtari_practical_2017 for details.
 
-[^broom]: 
+[^broom]: Note that <span class="pack">broom</span> works with dozens of modeling packages, not just in this context.
 
-[]
-The posterior predictive distribution is the distribution of the outcome variable implied by a model after using the observed data y (a vector of outcome values), and typically predictors X, to update our beliefs about the unknown parameters θ in the model. For each draw of the parameters θ from the posterior distribution p(θ | y, X) we generate an entire vector of outcomes.
+[^ppcheck]: The posterior predictive distribution is the distribution of the outcome variable implied by a model after using the observed data y (a vector of outcome values), and typically predictors X, to update our beliefs about the unknown parameters θ in the model. For each draw of the parameters θ from the posterior distribution p(θ | y, X) we generate an entire vector of outcomes.

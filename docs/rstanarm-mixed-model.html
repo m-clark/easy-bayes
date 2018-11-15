@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,13 +69,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -119,8 +117,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -178,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="models-in-brms.html"><a href="models-in-brms.html"><i class="fa fa-check"></i>Models in brms</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model.html"><a href="brms-mixed-model.html"><i class="fa fa-check"></i>brms: Mixed Model</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model-extensions.html"><a href="brms-mixed-model-extensions.html"><i class="fa fa-check"></i>brms: Mixed Model Extensions</a></li>
-<li class="chapter" data-level="" data-path="brms-mo-models-mo-models-mo-models.html"><a href="brms-mo-models-mo-models-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models, mo’ models, mo’ models!</a></li>
+<li class="chapter" data-level="" data-path="brms-mo-models.html"><a href="brms-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models!</a></li>
 </ul></li>
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
@@ -248,6 +246,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rstanarm-mixed-model" class="section level2">
 <h2>rstanarm: Mixed Model</h2>
 <p>Let’s look at a mixed model for another demonstration</p>
+<ul>
+<li>The average reaction time per day for subjects in a sleep deprivation study</li>
+<li>On day 0 the subjects had their normal amount of sleep</li>
+<li>Subsequently restricted to 3 hours of sleep per night</li>
+<li>The observations represent the average reaction time on a series of tests</li>
+</ul>
+<p>We’ll have a random intercept and random coefficient for Days</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">sleepstudy_lmer &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), </a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">                        <span class="dt">data =</span> sleepstudy)</a>
@@ -280,7 +285,7 @@ Days -0.138</code></pre>
 <p>Again, <span class="pack">rstanarm</span> sticks with the same style</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">sleepstudy_blmer &lt;-<span class="st"> </span><span class="kw">stan_lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>Days<span class="op">|</span>Subject), </a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">                              <span class="dt">data =</span> sleepstudy)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">summary</span>(sleepstudy_blmer)</a></code></pre></div>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">summary</span>(sleepstudy_blmer, <span class="dt">digits =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>stan_lmer
  family:       gaussian [identity]
  formula:      Reaction ~ Days + (1 + Days | Subject)
@@ -289,7 +294,10 @@ Days -0.138</code></pre>
             Median  MAD_SD 
 (Intercept) 251.616   6.503
 Days         10.451   1.629
-sigma        25.853   1.541
+
+Auxiliary parameter(s):
+      Median MAD_SD
+sigma 25.853  1.541
 
 Error terms:
  Groups   Name        Std.Dev. Corr
@@ -303,10 +311,169 @@ Sample avg. posterior predictive distribution of y:
 mean_PPD 298.572   2.716
 
 ------
-For info on the priors used see help(&#39;prior_summary.stanreg&#39;).</code></pre>
-<p>In the Bayesian model, the random effects are not BLUPS, but are parameters estimates in the model.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">data_frame</span>(<span class="dt">lme4 =</span> <span class="kw">ranef</span>(sleepstudy_lmer)[[<span class="dv">1</span>]][[<span class="st">&#39;(Intercept)&#39;</span>]],</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">           <span class="dt">bayesian =</span> <span class="kw">ranef</span>(sleepstudy_blmer)[[<span class="dv">1</span>]][[<span class="st">&#39;(Intercept)&#39;</span>]])</a></code></pre></div>
+* For help interpreting the printed output see ?print.stanreg
+* For info on the priors used see ?prior_summary.stanreg</code></pre>
+<p>In the Bayesian model, the random effects are not BLUPS, but are parameters estimates in the model</p>
+<p>In this case, we see a little more shrinkage relative to the standard approach</p>
+<p>The following are obtained from the same <span class="func">ranef</span> function used in <span class="pack">lme4</span></p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+lme4
+</th>
+<th style="text-align:right;">
+bayesian
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-40.4
+</td>
+<td style="text-align:right;">
+-36.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-39.0
+</td>
+<td style="text-align:right;">
+-35.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+23.7
+</td>
+<td style="text-align:right;">
+20.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22.3
+</td>
+<td style="text-align:right;">
+19.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:right;">
+7.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16.8
+</td>
+<td style="text-align:right;">
+14.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-7.2
+</td>
+<td style="text-align:right;">
+-6.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-0.3
+</td>
+<td style="text-align:right;">
+-1.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+34.9
+</td>
+<td style="text-align:right;">
+31.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-25.2
+</td>
+<td style="text-align:right;">
+-22.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-13.1
+</td>
+<td style="text-align:right;">
+-11.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4.6
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20.9
+</td>
+<td style="text-align:right;">
+18.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-25.6
+</td>
+<td style="text-align:right;">
+-23.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12.3
+</td>
+<td style="text-align:right;">
+10.8
+</td>
+</tr>
+</tbody>
+</table>
 </div>
             </section>
 

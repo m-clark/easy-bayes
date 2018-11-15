@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Easy Bayes with rstanarm and brms</title>
+  <meta name="description" content="This is a workshop introducing modeling techniques with the rstanarm and brms packages.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Easy Bayes with rstanarm and brms" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://m-clark.github.io/easy-bayes/" />
+  <meta property="og:image" content="https://m-clark.github.io/easy-bayes/img/nineteeneightyR.png" />
+  <meta property="og:description" content="This is a workshop introducing modeling techniques with the rstanarm and brms packages." />
+  <meta name="github-repo" content="m-clark/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Easy Bayes with rstanarm and brms" />
+  
+  <meta name="twitter:description" content="This is a workshop introducing modeling techniques with the rstanarm and brms packages." />
+  <meta name="twitter:image" content="https://m-clark.github.io/easy-bayes/img/nineteeneightyR.png" />
+
+
+
+<meta name="date" content="2018-11-15">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  <link rel="shortcut icon" href="img/R.ico" type="image/x-icon">
+<link rel="prev" href="brms-mixed-model-extensions.html">
+<link rel="next" href="model-criticism-in-rstanarm-and-brms.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/vis-4.20.1/vis.css" rel="stylesheet" />
+<script src="libs/vis-4.20.1/vis.min.js"></script>
+<script src="libs/visNetwork-binding-2.0.4/visNetwork.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class='before'><a href="./">Easy Bayes</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#section"></a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a><ul>
+<li class="chapter" data-level="" data-path="overview.html"><a href="overview.html#goals"><i class="fa fa-check"></i>Goals</a></li>
+<li class="chapter" data-level="" data-path="overview.html"><a href="overview.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Part I: Getting Started</b></span></li>
+<li class="chapter" data-level="" data-path="basic-bayesian-analysis.html"><a href="basic-bayesian-analysis.html"><i class="fa fa-check"></i>Basic Bayesian Analysis</a></li>
+<li class="chapter" data-level="" data-path="advantages.html"><a href="advantages.html"><i class="fa fa-check"></i>Advantages</a></li>
+<li class="chapter" data-level="" data-path="stan-and-the-stan-ecosystem.html"><a href="stan-and-the-stan-ecosystem.html"><i class="fa fa-check"></i>Stan and the Stan ecosystem</a><ul>
+<li class="chapter" data-level="" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i>Stan</a></li>
+<li class="chapter" data-level="" data-path="rstan.html"><a href="rstan.html"><i class="fa fa-check"></i>rstan</a></li>
+<li class="chapter" data-level="" data-path="rstanarm.html"><a href="rstanarm.html"><i class="fa fa-check"></i>rstanarm</a></li>
+<li class="chapter" data-level="" data-path="brms.html"><a href="brms.html"><i class="fa fa-check"></i>brms</a></li>
+<li class="chapter" data-level="" data-path="more-stan.html"><a href="more-stan.html"><i class="fa fa-check"></i>More Stan</a></li>
+</ul></li>
+<li class="part"><span><b>Part II: rstanarm</b></span></li>
+<li class="chapter" data-level="" data-path="getting-started-with-rstanarm.html"><a href="getting-started-with-rstanarm.html"><i class="fa fa-check"></i>Getting Started with rstanarm</a></li>
+<li class="chapter" data-level="" data-path="basic-glm.html"><a href="basic-glm.html"><i class="fa fa-check"></i>Basic GLM</a><ul>
+<li class="chapter" data-level="" data-path="traditional-glm.html"><a href="traditional-glm.html"><i class="fa fa-check"></i>Traditional GLM</a></li>
+<li class="chapter" data-level="" data-path="rstanarm-glm.html"><a href="rstanarm-glm.html"><i class="fa fa-check"></i>rstanarm: GLM</a><ul>
+<li class="chapter" data-level="" data-path="rstanarm-glm.html"><a href="rstanarm-glm.html#adding-more-options"><i class="fa fa-check"></i>Adding more options</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="rstanarm-mixed-model.html"><a href="rstanarm-mixed-model.html"><i class="fa fa-check"></i>rstanarm: Mixed Model</a></li>
+<li class="chapter" data-level="" data-path="rstanarm-other-models.html"><a href="rstanarm-other-models.html"><i class="fa fa-check"></i>rstanarm: Other Models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="priors.html"><a href="priors.html"><i class="fa fa-check"></i>Priors</a><ul>
+<li class="chapter" data-level="" data-path="default-priors.html"><a href="default-priors.html"><i class="fa fa-check"></i>Default priors</a></li>
+<li class="chapter" data-level="" data-path="getting-priors.html"><a href="getting-priors.html"><i class="fa fa-check"></i>Getting priors</a></li>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html"><i class="fa fa-check"></i>Setting priors</a><ul>
+<li class="chapter" data-level="" data-path="setting-priors.html"><a href="setting-priors.html#example"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Part III: brms</b></span></li>
+<li class="chapter" data-level="" data-path="installing-brms.html"><a href="installing-brms.html"><i class="fa fa-check"></i>Installing brms</a></li>
+<li class="chapter" data-level="" data-path="comparison-to-rstanarm.html"><a href="comparison-to-rstanarm.html"><i class="fa fa-check"></i>Comparison to rstanarm</a></li>
+<li class="chapter" data-level="" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i>Models</a><ul>
+<li class="chapter" data-level="" data-path="methods-for-brmsfit-objects.html"><a href="methods-for-brmsfit-objects.html"><i class="fa fa-check"></i>Methods for brmsfit objects</a></li>
+<li class="chapter" data-level="" data-path="models-in-brms.html"><a href="models-in-brms.html"><i class="fa fa-check"></i>Models in brms</a></li>
+<li class="chapter" data-level="" data-path="brms-mixed-model.html"><a href="brms-mixed-model.html"><i class="fa fa-check"></i>brms: Mixed Model</a></li>
+<li class="chapter" data-level="" data-path="brms-mixed-model-extensions.html"><a href="brms-mixed-model-extensions.html"><i class="fa fa-check"></i>brms: Mixed Model Extensions</a></li>
+<li class="chapter" data-level="" data-path="brms-mo-models.html"><a href="brms-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models!</a></li>
+</ul></li>
+<li class="part"><span><b>Part IV: Model Criticism</b></span></li>
+<li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
+<li class="chapter" data-level="" data-path="model-exploration.html"><a href="model-exploration.html"><i class="fa fa-check"></i>Model Exploration</a><ul>
+<li class="chapter" data-level="" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i>Linear models</a></li>
+<li class="chapter" data-level="" data-path="marginal-effects.html"><a href="marginal-effects.html"><i class="fa fa-check"></i>Marginal effects</a></li>
+<li class="chapter" data-level="" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i>Hypothesis tests</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html"><i class="fa fa-check"></i>Extracting results</a><ul>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html#tidy-methods-for-data-extraction"><i class="fa fa-check"></i>Tidy methods for data extraction</a></li>
+<li class="chapter" data-level="" data-path="extracting-results.html"><a href="extracting-results.html#tidybayes"><i class="fa fa-check"></i>tidybayes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i>Model Diagnostics</a><ul>
+<li class="chapter" data-level="" data-path="shinystan.html"><a href="shinystan.html"><i class="fa fa-check"></i>shinystan</a></li>
+<li class="chapter" data-level="" data-path="posterior-predictive-checks.html"><a href="posterior-predictive-checks.html"><i class="fa fa-check"></i>Posterior Predictive Checks</a></li>
+<li class="chapter" data-level="" data-path="observation-level.html"><a href="observation-level.html"><i class="fa fa-check"></i>Observation Level</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-performance.html"><a href="model-performance.html"><i class="fa fa-check"></i>Model Performance</a><ul>
+<li class="chapter" data-level="" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i>Prediction</a></li>
+<li class="chapter" data-level="" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i>Model Comparison</a></li>
+<li class="chapter" data-level="" data-path="model-averaging.html"><a href="model-averaging.html"><i class="fa fa-check"></i>Model Averaging</a></li>
+</ul></li>
+<li class="part"><span><b>Part V: Conclusion</b></span></li>
+<li class="chapter" data-level="" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li class='after'">
+   <a href="https://m-clark.github.io/">
+      <img src="img/mc_logo.png" style="width:25%; padding:0px 0; display:block; margin: 0 auto;" alt="MC logo">
+   </a>
+</li>
+<li class='after'">
+   <div style='text-align:center'>
+      <a href="https://github.com/m-clark/">
+         <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+      </a>
+   </div>
+</li>
+<li class='after'">
+   <div style='text-align:center'>
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+         <i class="fab fa-creative-commons fa-lg"></i>
+         <i class="fab fa-creative-commons-by fa-lg"></i>
+         <i class="fab fa-creative-commons-sa fa-lg"></i>
+      </a>
+   </div>
+</li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Easy Bayes with rstanarm and brms</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="brms-mo-models" class="section level2">
+<h2>brms: Mo’ models!</h2>
+<ul>
+<li>GAM</li>
+<li>Distributional response (e.g. model the variance as well as the mean)</li>
+<li>Gaussian Processes</li>
+<li>ZIP</li>
+<li>Multivariate</li>
+<li>Missing data imputation from a Bayesian approach</li>
+<li>Measurement error</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># additional distributions</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">model =<span class="st"> </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>z, <span class="dt">family =</span> skew_normal,</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">                                student,</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">                                shifted_lognormal,</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">                                weibull,</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">                                frechet,</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">                                gen_extreme_value,</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">                                exgaussian,</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">                                wiener,</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10">                                Beta,</a>
+<a class="sourceLine" id="cb20-11" data-line-number="11">                                von_mises,</a>
+<a class="sourceLine" id="cb20-12" data-line-number="12">                                asym_laplace,</a>
+<a class="sourceLine" id="cb20-13" data-line-number="13">                                hurdle_poisson,_negbinomial,_gamma,_lognormal,</a>
+<a class="sourceLine" id="cb20-14" data-line-number="14">                                zero_inflated_poisson,_negbinomial,_beta,_binomial; zero_one_inflated_beta,</a>
+<a class="sourceLine" id="cb20-15" data-line-number="15">                                categorical,</a>
+<a class="sourceLine" id="cb20-16" data-line-number="16">                                ordinal<span class="op">:</span><span class="st"> </span>cumulative, sratio, cratio, acat)</a>
+<a class="sourceLine" id="cb20-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb20-18" data-line-number="18"><span class="co"># model the variance as well as the mean</span></a>
+<a class="sourceLine" id="cb20-19" data-line-number="19">fit1 &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>z, sigma <span class="op">~</span><span class="st"> </span>x), </a>
+<a class="sourceLine" id="cb20-20" data-line-number="20">            <span class="dt">data =</span> dat1, </a>
+<a class="sourceLine" id="cb20-21" data-line-number="21">            <span class="dt">family =</span> gaussian)</a>
+<a class="sourceLine" id="cb20-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb20-23" data-line-number="23"><span class="co"># missing values</span></a>
+<a class="sourceLine" id="cb20-24" data-line-number="24">bform &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb20-25" data-line-number="25"><span class="st">  </span><span class="kw">bf</span>(bmi <span class="op">|</span><span class="st"> </span><span class="kw">mi</span>() <span class="op">~</span><span class="st"> </span>age <span class="op">*</span><span class="st"> </span><span class="kw">mi</span>(chl)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-26" data-line-number="26"><span class="st">  </span><span class="kw">bf</span>(chl <span class="op">|</span><span class="st"> </span><span class="kw">mi</span>() <span class="op">~</span><span class="st"> </span>age) <span class="op">+</span><span class="st"> </span><span class="kw">set_rescor</span>(<span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb20-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb20-28" data-line-number="28">fit &lt;-<span class="st"> </span><span class="kw">brm</span>(bform, <span class="dt">data =</span> nhanes)</a>
+<a class="sourceLine" id="cb20-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb20-30" data-line-number="30"><span class="co"># non-linear model with known form</span></a>
+<a class="sourceLine" id="cb20-31" data-line-number="31">nlform &lt;-<span class="st"> </span><span class="kw">bf</span>(cum <span class="op">~</span><span class="st"> </span>ult <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(dev <span class="op">/</span><span class="st"> </span>theta)<span class="op">^</span>omega)),</a>
+<a class="sourceLine" id="cb20-32" data-line-number="32">             ult <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>AY), </a>
+<a class="sourceLine" id="cb20-33" data-line-number="33">             omega <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb20-34" data-line-number="34">             theta <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb20-35" data-line-number="35">             <span class="dt">nl =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb20-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb20-37" data-line-number="37"><span class="co"># measurement error</span></a>
+<a class="sourceLine" id="cb20-38" data-line-number="38">fit1 &lt;-<span class="st"> </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">me</span>(x1, sdx) <span class="op">+</span><span class="st"> </span><span class="kw">me</span>(x2, sdx), </a>
+<a class="sourceLine" id="cb20-39" data-line-number="39">            <span class="dt">data =</span> dat, </a>
+<a class="sourceLine" id="cb20-40" data-line-number="40">            <span class="dt">save_mevars =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+
+</div>
+<!-- </div> -->
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="brms-mixed-model-extensions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-criticism-in-rstanarm-and-brms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["twitter", "facebook", "google", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"download": null,
+"toc": {
+"collapse": "section",
+"depth": 2,
+"scroll_highlight": true
+},
+"df_print": "kable",
+"highlight": "pygments",
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

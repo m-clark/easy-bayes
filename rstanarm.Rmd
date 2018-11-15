@@ -10,7 +10,7 @@
 
 # Basic GLM
 
-School administrators study the attendance behavior of high school juniors at two schools  
+Attendance behavior of high school juniors at two schools  
 
 Target:
 
@@ -126,6 +126,13 @@ attendance_bglm <- stan_glm(daysabs ~ math + gender + prog,
 
 Let's look at a mixed model for another demonstration
 
+- The average reaction time per day for subjects in a sleep deprivation study
+- On day 0 the subjects had their normal amount of sleep
+- Subsequently restricted to 3 hours of sleep per night
+- The observations represent the average reaction time on a series of tests 
+
+We'll have a random intercept and random coefficient for Days
+
 ```{r mixed, eval=TRUE}
 library(lme4)
 sleepstudy_lmer <- lmer(Reaction ~ Days + (1 + Days|Subject), 
@@ -138,7 +145,7 @@ Again, <span class="pack">rstanarm</span> sticks with the same style
 ```{r bayesian_mixed, echo=1:3}
 sleepstudy_blmer <- stan_lmer(Reaction ~ Days + (1 + Days|Subject), 
                               data = sleepstudy)
-summary(sleepstudy_blmer)
+summary(sleepstudy_blmer, digits = 3)
 save(sleepstudy_lmer, sleepstudy_blmer, sleepstudy_brms, file = 'data/sleepstudy_bayes.RData')
 ```
 
@@ -148,11 +155,16 @@ print(sleepstudy_blmer, digits = 3)
 ```
 
 
-In the Bayesian model, the random effects are not BLUPS, but are parameters estimates in the model.
+In the Bayesian model, the random effects are not BLUPS, but are parameters estimates in the model
 
-```{r ranef_compare}
+In this case, we see a little more shrinkage relative to the standard approach
+
+The following are obtained from the same <span class="func">ranef</span> function used in <span class="pack">lme4</span>
+
+```{r ranef_compare, eval=TRUE, echo=FALSE}
 data_frame(lme4 = ranef(sleepstudy_lmer)[[1]][['(Intercept)']],
-           bayesian = ranef(sleepstudy_blmer)[[1]][['(Intercept)']])
+           bayesian = ranef(sleepstudy_blmer)[[1]][['(Intercept)']]) %>% 
+  kable_df(digits=1)
 ```
 
 

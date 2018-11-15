@@ -56,7 +56,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -69,13 +69,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -119,8 +117,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/book.css" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+<link rel="stylesheet" href="css\book.css" type="text/css" />
+<link rel="stylesheet" href="https:\\use.fontawesome.com\releases\v5.3.1\css\all.css" type="text/css" />
 </head>
 
 <body>
@@ -178,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="models-in-brms.html"><a href="models-in-brms.html"><i class="fa fa-check"></i>Models in brms</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model.html"><a href="brms-mixed-model.html"><i class="fa fa-check"></i>brms: Mixed Model</a></li>
 <li class="chapter" data-level="" data-path="brms-mixed-model-extensions.html"><a href="brms-mixed-model-extensions.html"><i class="fa fa-check"></i>brms: Mixed Model Extensions</a></li>
-<li class="chapter" data-level="" data-path="brms-mo-models-mo-models-mo-models.html"><a href="brms-mo-models-mo-models-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models, mo’ models, mo’ models!</a></li>
+<li class="chapter" data-level="" data-path="brms-mo-models.html"><a href="brms-mo-models.html"><i class="fa fa-check"></i>brms: Mo’ models!</a></li>
 </ul></li>
 <li class="part"><span><b>Part IV: Model Criticism</b></span></li>
 <li class="chapter" data-level="" data-path="model-criticism-in-rstanarm-and-brms.html"><a href="model-criticism-in-rstanarm-and-brms.html"><i class="fa fa-check"></i>Model Criticism in rstanarm and brms</a></li>
@@ -250,21 +248,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="pack">brms</span> allows one to plot marginal effects</p>
 <p>For standard linear models this is useful for group comparisons and interactions</p>
 <p>For nonlinear models (glm and beyond) useful for any effect</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">marginal_effects</span>(attendance_brms)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">marginal_effects</span>(attendance_brms)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/brms_marginal-1.svg" width="768" style="display: block; margin: auto;" /><img src="easy-bayes_files/figure-html/brms_marginal-2.svg" width="768" style="display: block; margin: auto;" /><img src="easy-bayes_files/figure-html/brms_marginal-3.svg" width="768" style="display: block; margin: auto;" /></p>
 <p>These are <span class="objclass">ggplot</span> objects, so you can modify them accordingly</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">math_me =<span class="st"> </span><span class="kw">marginal_effects</span>(attendance_brms, <span class="dt">effects =</span> <span class="st">&#39;math&#39;</span>)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">plot</span>(math_me, </a>
-<a class="sourceLine" id="cb30-3" data-line-number="3">     <span class="dt">plot =</span> F,</a>
-<a class="sourceLine" id="cb30-4" data-line-number="4">     <span class="dt">rug =</span> T,</a>
-<a class="sourceLine" id="cb30-5" data-line-number="5">     <span class="dt">rug_args =</span> <span class="kw">list</span>(<span class="dt">color=</span><span class="st">&#39;darkred&#39;</span>), </a>
-<a class="sourceLine" id="cb30-6" data-line-number="6">     <span class="dt">points =</span> T,</a>
-<a class="sourceLine" id="cb30-7" data-line-number="7">     <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">color=</span><span class="st">&#39;papayawhip&#39;</span>))[[<span class="dv">1</span>]] <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_black</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">math_me =<span class="st"> </span><span class="kw">marginal_effects</span>(attendance_brms, <span class="dt">effects =</span> <span class="st">&#39;math&#39;</span>)</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw">plot</span>(math_me, </a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">     <span class="dt">plot =</span> F,</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">     <span class="dt">rug =</span> T,</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">     <span class="dt">rug_args =</span> <span class="kw">list</span>(<span class="dt">color=</span><span class="st">&#39;darkred&#39;</span>), </a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">     <span class="dt">points =</span> T,</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">     <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">color=</span><span class="st">&#39;papayawhip&#39;</span>))[[<span class="dv">1</span>]] <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_black</span>()</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/brms_marginal_gg-1.svg" width="768" style="display: block; margin: auto;" /></p>
 <p>Example with smooth interaction</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">attendance_brms_inter =<span class="st"> </span><span class="kw">update</span>(attendance_brms,  <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>math <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(math, <span class="dt">by=</span>gender), <span class="dt">cores=</span><span class="dv">4</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">marginal_smooths</span>(attendance_brms_inter)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">attendance_brms_inter =<span class="st"> </span><span class="kw">update</span>(attendance_brms,  <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>math <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(math, <span class="dt">by=</span>gender), <span class="dt">cores=</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">marginal_smooths</span>(attendance_brms_inter)</a></code></pre></div>
 <p><img src="easy-bayes_files/figure-html/brms_marginal_inter_pretty-1.svg" width="768" style="display: block; margin: auto;" /></p>
 </div>
             </section>
